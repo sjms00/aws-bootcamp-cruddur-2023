@@ -1,31 +1,21 @@
 # Week 0 — Billing and Architecture
 
-Install AWS CLI
+## Install AWS CLI
 
-- Instructions in
-https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+- Install AWS CLI when Gidpot environment launch
+- To insall AWS CLI, the instructions are in https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 
-For MAC
-curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
-sudo installer -pkg AWSCLIV2.pkg -target /
-
-jordimorreres@MBP-de-Jordi ~ % which aws
-/usr/local/bin/aws
-jordimorreres@MBP-de-Jordi ~ % aws --version
-aws-cli/2.9.23 Python/3.9.11 Darwin/19.6.0 exe/x86_64 prompt/off
-jordimorreres@MBP-de-Jordi ~ % 
+Update the .gitpod.yml to include the task to install AWS CLI
 
 
-
-
-
-In cloudshell
-[cloudshell-user@ip-10-6-5-234 ~]$ aws --cli-auto-prompt
-> aws sts get-caller-identity 
-{
-    "UserId": "AIDATFFIEGJHUHNDJREBQ",
-    "Account": "217248445007",
-    "Arn": "arn:aws:iam::217248445007:user/JMbootcamp"
-}
-[cloudshell-user@ip-10-6-5-234 ~]$ 
-
+\tasks:
+  - name: aws-cli
+    env:
+      AWS_CLI_AUTO_PROMPT: on-partial
+    init: |
+      cd /workspace
+      curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      unzip awscliv2.zip
+      sudo ./aws/install
+      cd $THEIA_WORKSPACE_ROOT
+\
