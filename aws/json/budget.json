@@ -3,7 +3,7 @@
         "Amount": "100",
         "Unit": "USD"
     },
-    "BudgetName": "Example Tag Budget",
+    "BudgetName": "JM budget bootcamp",
     "BudgetType": "COST",
     "CostFilters": {
         "TagKeyValue": [

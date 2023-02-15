@@ -18,6 +18,14 @@ At the start of the bootcamp you need to create a new Github Repository from thi
 The `/journal` directory contains
 
 - [ ] [Week 0](journal/week0.md)
+    export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+    gp env AWS_ACCOUNT_ID="217248445007"
+    
+    budgets create-budget \
+    --account-id 217248445007 \
+    --budget file://aws/json/nudget.json \
+    --notifications-with-subscribers file://aws/json/budget-notifications-with-subscribers.json
+
 - [ ] [Week 1](journal/week1.md)
 - [ ] [Week 2](journal/week2.md)
 - [ ] [Week 3](journal/week3.md)
