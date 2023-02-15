@@ -1,0 +1,18 @@
+
+
+[
+    {
+        "Notification": {
+            "ComparisonOperator": "GREATER_THAN",
+            "NotificationType": "ACTUAL",
+            "Threshold": 80,
+            "ThresholdType": "PERCENTAGE"
+        },
+        "Subscribers": [
+            {
+                "Address": "jmorreres@andorra.ad",
+                "SubscriptionType": "EMAIL"
+            }
+        ]
+    }
+  ]
