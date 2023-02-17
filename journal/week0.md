@@ -114,3 +114,16 @@ aws budgets create-budget \
     --budget file://aws/json/budget.json \
     --notifications-with-subscribers file://aws/json/budget-notifications-with-subscribers.json
 ```
+
+
+### cruddur Conceptual Diagram
+
+The shared link lucidchart is:
+https://lucid.app/lucidchart/d450e2fa-da55-4f2f-8cba-a54fff53fada/edit?viewport_loc=-1460%2C133%2C1579%2C1077%2C0_0&invitationId=inv_69c7750a-3dae-4ba8-82bc-9a91b613bb7d
+
+### cruddur architectual diagram
+
+The shared link lucidchart is:
+https://lucid.app/lucidchart/043298e9-7b3e-4ba9-94a4-cc3466f7f525/edit?view_items=9C4xYp1cbfzw&invitationId=inv_6a5b5d81-b8bf-492a-b70a-7542f342cb5f![image](https://user-images.githubusercontent.com/37512346/219657672-5f9f344a-6dd3-4c42-86a3-4c66fb2cf8d8.png)
+
+
