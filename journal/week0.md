@@ -70,16 +70,16 @@ I'll create a SNS Topic
 ```sh
 aws sns create-topic --name billing-alarm
 ```
-"TopicArn": "arn:aws:sns:us-east-1:217248445007:billing-alarm"
+"TopicArn": "arn:aws:sns:us-east-1:********5007:billing-alarm"
 
 which will return a TopicARN
 
 We'll create a subscription supply the TopicARN and our Email
 ```sh
 aws sns subscribe \
-    --topic-arn="arn:aws:sns:us-east-1:217248445007:billing-alarm" \
+    --topic-arn="arn:aws:sns:us-east-1:********5007:billing-alarm" \
     --protocol=email \
-    --notification-endpoint=jmorreres@andorra.ad
+    --notification-endpoint=jm*****@******.ad
 ```
 
 Check email and confirm the subscription
@@ -113,7 +113,7 @@ aws sts get-caller-identity --query Account --output text
 
 ```sh
 aws budgets create-budget \
-    --account-id 217248445007 \
+    --account-id ********5007 \
     --budget file://aws/json/budget.json \
     --notifications-with-subscribers file://aws/json/budget-notifications-with-subscribers.json
 ```
