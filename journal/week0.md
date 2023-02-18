@@ -114,7 +114,7 @@ aws budgets create-budget \
     --budget file://aws/json/budget.json \
     --notifications-with-subscribers file://aws/json/budget-notifications-with-subscribers.json
 ```
-![Create budget Alert](_docs/assets/week0/Budget_alert.png)
+![Create budget Alert](_docs/assets/week0/Budget_alert_100.png)
 
 ### Cruddur Conceptual Diagram
 
