@@ -22,6 +22,7 @@ tasks:
 ```
 
 ### Create a new User and Generate AWS Credentials
+I will create my new user JMbootcamp
 
 - Go to (IAM Users Console] and create a new user
 - `Enable console access` for the user
@@ -31,6 +32,7 @@ tasks:
 - Choose AWS CLI Access
 - Download the CSV with the credentials
 
+![Create Admin user](_docs/assets/week0/dmin_user.png) 
 
 We'll tell Gitpod to remember these credentials if we relaunch our workspaces
 ```
@@ -87,7 +89,7 @@ aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.js
 ```
 
 ## Create an AWS Budget
-
+I crated an Alert when the budget when it reaches 100$, I use the account for my web also
 [aws budgets create-budget](https://docs.aws.amazon.com/cli/latest/reference/budgets/create-budget.html)
 
 Get your AWS Account ID
