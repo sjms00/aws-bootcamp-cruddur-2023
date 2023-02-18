@@ -51,7 +51,7 @@ Show my identity:
 ![aws sts get-caller-identity](_docs/assets/week0/get_caller_identity.png) 
 
 ### Configure local developement environment with Visual Code atached with my gidhab repository
-I'll use my local developement tools, with Visual Studio Code, I use aws configure to connect with my account
+I'll use my local developement tools, with Visual Studio Code, I use ```aws configure``` to connect with my account
 
 ![Visual Code Config](_docs/assets/week0/Visual_code_config_local.png)
 
@@ -96,7 +96,8 @@ aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.js
 ```
 
 ## Create an AWS Budget
-I crated an Alert when the budget when it reaches 100$, I use the account for my web also
+I created a budget to 100$, with two alerts at 75% and 90%, I use the account for my web also
+
 [aws budgets create-budget](https://docs.aws.amazon.com/cli/latest/reference/budgets/create-budget.html)
 
 Get your AWS Account ID
@@ -114,7 +115,7 @@ aws budgets create-budget \
     --budget file://aws/json/budget.json \
     --notifications-with-subscribers file://aws/json/budget-notifications-with-subscribers.json
 ```
-![Create budget Alert](_docs/assets/week0/Budget_alert.png)
+![Create budget Alert](_docs/assets/week0/Budget_alert_100.png)
 
 ### Cruddur Conceptual Diagram
 
