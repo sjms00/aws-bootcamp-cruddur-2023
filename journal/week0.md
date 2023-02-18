@@ -118,12 +118,13 @@ aws budgets create-budget \
 
 ### cruddur Conceptual Diagram
 
-The shared link lucidchart is:
-https://lucid.app/lucidchart/d450e2fa-da55-4f2f-8cba-a54fff53fada/edit?viewport_loc=-1460%2C133%2C1579%2C1077%2C0_0&invitationId=inv_69c7750a-3dae-4ba8-82bc-9a91b613bb7d
+[Lucid Chart Conceptual Diagram Share Link](https://lucid.app/lucidchart/d450e2fa-da55-4f2f-8cba-a54fff53fada/edit?viewport_loc=-1460%2C133%2C1579%2C1077%2C0_0&invitationId=inv_69c7750a-3dae-4ba8-82bc-9a91b613bb7d![image](https://user-images.githubusercontent.com/37512346/219849175-ff28a336-dee2-4054-9084-9d29f32a8928.png)
+)
 
-### cruddur architectual diagram
+### cruddur Architectual diagram
 
-The shared link lucidchart is:
-https://lucid.app/lucidchart/043298e9-7b3e-4ba9-94a4-cc3466f7f525/edit?view_items=9C4xYp1cbfzw&invitationId=inv_6a5b5d81-b8bf-492a-b70a-7542f342cb5f![image](https://user-images.githubusercontent.com/37512346/219657672-5f9f344a-6dd3-4c42-86a3-4c66fb2cf8d8.png)
+[Lucid Chart Architectural Diagram Share Link](https://lucid.app/lucidchart/043298e9-7b3e-4ba9-94a4-cc3466f7f525/edit?view_items=9C4xYp1cbfzw&invitationId=inv_6a5b5d81-b8bf-492a-b70a-7542f342cb5f![image](https://user-images.githubusercontent.com/37512346/219849185-67a3eee6-ccad-4ec0-8b5b-f0b21399f3fe.png)
+)
+
 
 
