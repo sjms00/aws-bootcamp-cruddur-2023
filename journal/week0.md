@@ -51,7 +51,7 @@ Show my identity:
 ![aws sts get-caller-identity](_docs/assets/week0/get_caller_identity.png) 
 
 ### Configure local developement environment with Visual Code atached with my gidhab repository
-I'll use my local developement tools, with Visual Studio Code
+I'll use my local developement tools, with Visual Studio Code, I use aws configure to connect with my account
 
 ![Visual Code Config](_docs/assets/week0/Visual_code_config.png)
 
