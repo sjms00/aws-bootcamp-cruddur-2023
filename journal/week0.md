@@ -95,6 +95,8 @@ Check email and confirm the subscription
 aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json
 ```
 
+![Billing Alert](_docs/assets/week0/Billing_Alert.png)
+
 ## Create an AWS Budget
 I created a budget to 100$, with two alerts at 75% and 90%, I use the account for my web also
 
