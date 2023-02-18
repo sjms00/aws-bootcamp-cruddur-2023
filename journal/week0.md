@@ -53,7 +53,7 @@ Show my identity:
 ### Configure local developement environment with Visual Code atached with my gidhab repository
 I'll use my local developement tools, with Visual Studio Code, I use aws configure to connect with my account
 
-![Visual Code Config](_docs/assets/week0/Visual_code_config.png)
+![Visual Code Config](_docs/assets/week0/Visual_code_config_local.png)
 
 
 ## Enable Billing Alerts
