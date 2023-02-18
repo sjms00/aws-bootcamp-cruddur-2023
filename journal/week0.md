@@ -44,29 +44,20 @@ gp env AWS_DEFAULT_REGION="us-east-1"
 ```sh
 aws sts get-caller-identity
 ```
+Show my identity:
+![aws sts get-caller-identity](_docs/assets/week0/get_caller_identity.png) 
 
-You should see something like this:
-```json
-{
-    "UserId": "AIDATFFIEGJHUHNDJREBQ",
-    "Account": "217248445007",
-    "Arn": "arn:aws:iam::217248445007:user/JMbootcamp"
-}
-```
-
-## Enable Billing 
+## Enable Billing Alerts
 
 We need to turn on Billing Alerts to recieve alerts...
 
-## Creating a Billing Alarm
-
 ### Create SNS Topic
 
-- We need an SNS topic before we create an alarm.
-- The SNS topic is what will delivery us an alert when we get overbilled
+- I need an SNS topic before I create an alarm.
+- The SNS topic is what will delivery us an alert when I get overbilled
 - [aws sns create-topic](https://docs.aws.amazon.com/cli/latest/reference/sns/create-topic.html)
 
-We'll create a SNS Topic
+I'll create a SNS Topic
 ```sh
 aws sns create-topic --name billing-alarm
 ```
@@ -82,7 +73,7 @@ aws sns subscribe \
     --notification-endpoint=jmorreres@andorra.ad
 ```
 
-Check your email and confirm the subscription
+Check email and confirm the subscription
 
 #### Create Alarm
 
@@ -114,7 +105,7 @@ aws budgets create-budget \
     --budget file://aws/json/budget.json \
     --notifications-with-subscribers file://aws/json/budget-notifications-with-subscribers.json
 ```
-
+![Create budget Alert](_docs/assets/week0/Budget_alert.png)
 
 ### cruddur Conceptual Diagram
 
@@ -126,6 +117,5 @@ aws budgets create-budget \
 
 [Lucid Chart Architectural Diagram Share Link](https://lucid.app/lucidchart/043298e9-7b3e-4ba9-94a4-cc3466f7f525/edit?view_items=9C4xYp1cbfzw&invitationId=inv_6a5b5d81-b8bf-492a-b70a-7542f342cb5f![image](https://user-images.githubusercontent.com/37512346/219849185-67a3eee6-ccad-4ec0-8b5b-f0b21399f3fe.png)
 )
-
-
+![Image of The Architectual Diagram](_docs/assets/week0/cruddur_Architectual_Diagram.png) 
 
