@@ -96,7 +96,8 @@ aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.js
 ```
 
 ## Create an AWS Budget
-I crated an Alert when the budget when it reaches 100$, I use the account for my web also
+I created a budget to 100$, with two alerts at 75% and 90%, I use the account for my web also
+
 [aws budgets create-budget](https://docs.aws.amazon.com/cli/latest/reference/budgets/create-budget.html)
 
 Get your AWS Account ID
