@@ -1,0 +1,10 @@
+
+aws dynamodb put-item \
+	--endpoint-url http://localhost:8000 \
+    --table-name Music  \
+    --item \
+        '{"Artist": {"S": "Know"}, "SongTitle": {"S": "Call Me"}, "AlbumTitle": {"S": "Famous"}, "Awards": {"N": "2"}}' \
+	--return-consumed-capacity TOTAL
+
+
+aws dynamodb scan --table-name Music --endpoint-url http://localhost:8000
