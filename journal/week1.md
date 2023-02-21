@@ -29,10 +29,10 @@ cd ..
 - make sure to unlock the port on the port tab
 - open the link for 4567 in your browser
 - append to the url to `/api/activities/home`
-- I get back this json
+
+I get back this json:
 
 ![json_in_browser](_docs/assets/week1/Json_gitpod.png) 
-
 
 
 ### Add Dockerfile
@@ -65,14 +65,7 @@ docker build -t  backend-flask ./backend-flask
 
 Run 
 ```sh
-docker run --rm -p 4567:4567 -it backend-flask
-FRONTEND_URL="*" BACKEND_URL="*" docker run --rm -p 4567:4567 -it backend-flask
-export FRONTEND_URL="*"
-export BACKEND_URL="*"
 docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
-docker run --rm -p 4567:4567 -it  -e FRONTEND_URL -e BACKEND_URL backend-flask
-unset FRONTEND_URL="*"
-unset BACKEND_URL="*"
 ```
 
 Run in background
@@ -80,7 +73,7 @@ Run in background
 docker container run --rm -p 4567:4567 -d backend-flask
 ```
 
-Return the container id into an Env Vat
+Return the container id into an Env Var
 ```sh
 CONTAINER_ID=$(docker run --rm -p 4567:4567 -d backend-flask)
 ```
@@ -93,18 +86,22 @@ CONTAINER_ID=$(docker run --rm -p 4567:4567 -d backend-flask)
 docker ps
 docker images
 ```
+my docker started:
 
+![docker started](_docs/assets/week1/Docker_gippod_v2.png)
 
 ### Send Curl to Test Server
 
 ```sh
 curl -X GET http://localhost:4567/api/activities/home -H "Accept: application/json" -H "Content-Type: application/json"
 ```
+That's work:
+![json curl](_docs/assets/week1/json_curl.png)
 
 ### Check Container Logs
 
 ```sh
-docker logs CONTAINER_ID -f
+docker logs $CONTAINER_ID -f
 docker logs backend-flask -f
 docker logs $CONTAINER_ID -f
 ```
@@ -124,7 +121,7 @@ docker run --rm -it busybosy
 ### Gain Access to a Container
 
 ```sh
-docker exec CONTAINER_ID -it /bin/bash
+docker exec $CONTAINER_ID -it /bin/bash
 ```
 
 > You can just right click a container and see logs in VSCode with Docker extension
@@ -220,6 +217,10 @@ networks:
     driver: bridge
     name: cruddur
 ```
+
+I run '''docker compose up''' and I'll test that the app is working:
+
+![docker compose](_docs/assets/week1/Docker-Compose.png)
 
 ## Adding DynamoDB Local and Postgres
 
