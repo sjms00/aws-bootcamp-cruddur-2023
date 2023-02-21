@@ -349,6 +349,36 @@ In dockerhub we see the image uploaded:
 ## Use multi-stage building for a Dockerfile build
 
 ## Implement a healthcheck in the V3 Docker compose file
+To implement a healthcheck we need to add some extra config in `docker-compose.yml`, in this case in frontend container, we add:
+
+```sh
+ healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 2
+      start_period: 20s
+```
+![docker healthy](_docs/assets/week1/healthy.png)
+
+To test a failure I changed the port in the healthcheck to 2000
+```sh
+ healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 2
+      start_period: 20s
+```
+
+And now the container frontend appear unhealthy
+
+![docker unhealthy](_docs/assets/week1/unhealthy.png)
+
+
+In this case, we can see the container is healthy in the console and with the command `docker ps -a`
+
+
 
 ## Research best practices of Dockerfiles and attempt to implement it in your Dockerfile
 
