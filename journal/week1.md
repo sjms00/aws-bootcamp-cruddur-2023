@@ -354,7 +354,8 @@ In dockerhub we see the image uploaded:
 
 ## Learn how to install Docker on your localmachine and get the same containers running outside of Gitpod / Codespaces
 
-I used my Visual Studio Code on Ubuntu, and install/configured docker to run the four containers
+I used my Visual Studio Code on Ubuntu, and install/configured docker to run the four containers.
+
 This link is a guide to install Docker:
 https://docs.docker.com/engine/install/ubuntu/
 
