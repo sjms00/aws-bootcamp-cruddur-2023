@@ -354,7 +354,20 @@ In dockerhub we see the image uploaded:
 
 ## Learn how to install Docker on your localmachine and get the same containers running outside of Gitpod / Codespaces
 
-I  used my Visual Studio Code on Ubuntu, and install7configured docker to run the four containers
+I used my Visual Studio Code on Ubuntu, and install/configured docker to run the four containers
+I used this link to install Docker:
+https://docs.docker.com/engine/install/ubuntu/
+
+I added the extensions for Explore Databases in my Visual Studio
+I installed manually the postgres soft:
+```sh
+      curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
+      echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
+      sudo apt update
+      sudo apt install -y postgresql-client-13 libpq-dev
+```
+
+And this is the result:
 
 ![Visual_Studio_Local](_docs/assets/week1/Visual_Studio_Local.png)
 
