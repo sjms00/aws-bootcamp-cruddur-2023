@@ -354,4 +354,10 @@ In dockerhub we see the image uploaded:
 
 ## Learn how to install Docker on your localmachine and get the same containers running outside of Gitpod / Codespaces
 
+I  used my Visual Studio Code on Ubuntu, and install7configured docker to run the four containers
+
+![Visual_Studio_Local](_docs/assets/week1/Visual_Studio_Local.png)
+
+![CruddurLocal](_docs/assets/week1/CruddurLocal.png)
+
 ## Launch an EC2 instance that has docker installed, and pull a container to demonstrate you can run your own docker processes. 
