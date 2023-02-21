@@ -29,7 +29,9 @@ cd ..
 - make sure to unlock the port on the port tab
 - open the link for 4567 in your browser
 - append to the url to `/api/activities/home`
-- you should get back json
+- I get back this json
+
+![json_in_browser](_docs/assets/week1/Json_gitpodutilitzats.png) 
 
 
 
