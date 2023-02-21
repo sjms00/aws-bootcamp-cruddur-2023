@@ -31,7 +31,7 @@ cd ..
 - append to the url to `/api/activities/home`
 - I get back this json
 
-![json_in_browser](_docs/assets/week1/Json_gitpodutilitzats.png) 
+![json_in_browser](_docs/assets/week1/Json_gitpod.png) 
 
 
 
