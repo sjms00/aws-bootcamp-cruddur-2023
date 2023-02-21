@@ -22,7 +22,7 @@ ports:
   - name: app
     port: 3000
     visibility: public
-  
+
 vscode:
   extensions:
     - 42Crunch.vscode-openapi
