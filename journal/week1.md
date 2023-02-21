@@ -307,5 +307,48 @@ I created a table in dynamodb and add items to test, and it works:
 
 And the postgres connection works fine also:
 
+Example of using DynamoDB local
+https://github.com/100DaysOfCloud/challenge-dynamodb-local
+
+I created a table in dynamodb and add items to test, and it works:
+
+![Read item from dynamodb](_docs/assets/week1/dinamodb_read_item.png)
+
+And the postgres connection works fine also:
+
 ![Connect to postgres](_docs/assets/week1/Postgres_connect.png)
+
+
+I added the notification feature in backend and frontend containers:
+
+Example of using DynamoDB local
+https://github.com/100DaysOfCloud/challenge-dynamodb-local
+
+I created a table in dynamodb and add items to test, and it works:
+
+![Read item from dynamodb](_docs/assets/week1/dinamodb_read_item.png)
+
+And the postgres connection works fine also:
+
+![Notification Feature](_docs/assets/week1/notification_feature.png)
+
+## Testing tools
+
+### gidhub codespaces
+I tested to use the gidhub codespaces
+![Github Codespaces](_docs/assets/week1/github_codespaces.png)
+
+### Snyk
+I tested Snyk to find vulnerabilities in our frontend code, I find it because we use an old node version
+
+![snyk cruddur frontend](_docs/assets/week1/snyk_cruddur_frontend.png)
+
+Entire repo:
+
+![Entire repo](_docs/assets/week1/snyk_cruddur.png)
+
+
+
+
+
 
