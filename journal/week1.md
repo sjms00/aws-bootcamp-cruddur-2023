@@ -297,16 +297,6 @@ volumes:
     driver: local
 ```
 
-
-Example of using DynamoDB local
-https://github.com/100DaysOfCloud/challenge-dynamodb-local
-
-I created a table in dynamodb and add items to test, and it works:
-
-![Read item from dynamodb](_docs/assets/week1/dinamodb_read_item.png)
-
-And the postgres connection works fine also:
-
 Example of using DynamoDB local
 https://github.com/100DaysOfCloud/challenge-dynamodb-local
 
@@ -318,17 +308,8 @@ And the postgres connection works fine also:
 
 ![Connect to postgres](_docs/assets/week1/Postgres_connect.png)
 
-
+## Improve the code, addind notification feature
 I added the notification feature in backend and frontend containers:
-
-Example of using DynamoDB local
-https://github.com/100DaysOfCloud/challenge-dynamodb-local
-
-I created a table in dynamodb and add items to test, and it works:
-
-![Read item from dynamodb](_docs/assets/week1/dinamodb_read_item.png)
-
-And the postgres connection works fine also:
 
 ![Notification Feature](_docs/assets/week1/notification_feature.png)
 
