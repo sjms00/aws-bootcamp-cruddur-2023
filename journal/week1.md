@@ -364,7 +364,7 @@ To implement a healthcheck we need to add some extra config in `docker-compose.y
 To test a failure I changed the port in the healthcheck to 2000
 ```sh
  healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      test: ["CMD", "curl", "-f", "http://localhost:2000"]
       interval: 30s
       timeout: 10s
       retries: 2
