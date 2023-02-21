@@ -305,6 +305,7 @@ I created a table in dynamodb and add items to test, and it works:
 ![Read item from dynamodb](_docs/assets/week1/dinamodb_read_item.png)
 
 And the postgres connection works fine also:
+Run `psql -Upostgres --host localhost`
 
 ![Connect to postgres](_docs/assets/week1/Postgres_connect.png)
 
@@ -329,7 +330,28 @@ Entire repo:
 ![Entire repo](_docs/assets/week1/snyk_cruddur.png)
 
 
+### Homework Challenges    
+## Run the dockerfile CMD as an external script
 
+## Push and tag a image to DockerHub (they have a free tier)
 
+I tag an image with my account in dockerhub and then push it:
+'''sh
+docker tag aws-bootcamp-cruddur-2023-frontend-react-js:latest sjms00/aws-bootcamp-cruddur-2023-frontend-react-js
+docker push sjms00/aws-bootcamp-cruddur-2023-frontend-react-js
+'''
+![Tag and push image](_docs/assets/week1/tag_push_image_dockerhub.png)
 
+In dockerhub we see the image uploaded:
 
+![dockerhub](_docs/assets/week1/dockerhub.png)
+
+## Use multi-stage building for a Dockerfile build
+
+## Implement a healthcheck in the V3 Docker compose file
+
+## Research best practices of Dockerfiles and attempt to implement it in your Dockerfile
+
+## Learn how to install Docker on your localmachine and get the same containers running outside of Gitpod / Codespaces
+
+## Launch an EC2 instance that has docker installed, and pull a container to demonstrate you can run your own docker processes. 
