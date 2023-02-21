@@ -355,7 +355,7 @@ In dockerhub we see the image uploaded:
 ## Learn how to install Docker on your localmachine and get the same containers running outside of Gitpod / Codespaces
 
 I used my Visual Studio Code on Ubuntu, and install/configured docker to run the four containers
-I used this link to install Docker:
+This link is a guide to install Docker:
 https://docs.docker.com/engine/install/ubuntu/
 
 I added the extensions for Explore Databases in my Visual Studio
