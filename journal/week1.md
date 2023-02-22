@@ -407,6 +407,7 @@ And this is the result:
 ## Launch an EC2 instance that has docker installed, and pull a container to demonstrate you can run your own docker processes. 
 
 First I created an EC2 ubuntu instance with ssh credentials
+
 With this info I installed docker:
 
 https://docs.docker.com/engine/install/ubuntu/
@@ -429,4 +430,6 @@ start containers:
 ```sh
 docker compose up
 ```
+
+![EC2 docker](_docs/assets/week1/EC2_docker.png)
 
