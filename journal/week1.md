@@ -405,3 +405,28 @@ And this is the result:
 ![CruddurLocal](_docs/assets/week1/CruddurLocal.png)
 
 ## Launch an EC2 instance that has docker installed, and pull a container to demonstrate you can run your own docker processes. 
+
+First I created an EC2 ubuntu instance with ssh credentials
+With this info I installed docker:
+
+https://docs.docker.com/engine/install/ubuntu/
+
+Install git and clone my repositori:
+
+```sh
+git clone https://github.com/sjms00/aws-bootcamp-cruddur-2023.git
+```
+
+install node:
+
+```sh
+sudo apt install nodejs
+sudo apt install npm
+```
+
+start containers:
+
+```sh
+docker compose up
+```
+
