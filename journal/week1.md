@@ -341,6 +341,7 @@ docker build -t  frontend-react-js ./frontend-react-js
 docker container run --rm -p 3000:3000 -d frontend-react-js
 ```
 
+
 ## Push and tag a image to DockerHub (they have a free tier)
 
 I tag an image with my account in dockerhub and then push it:
@@ -354,7 +355,11 @@ In dockerhub we see the image uploaded:
 
 ![dockerhub](_docs/assets/week1/dockerhub.png)
 
+
 ## Use multi-stage building for a Dockerfile build
+
+https://dev.to/pavanbelagatti/what-are-multi-stage-docker-builds-1mi9#:~:text=One%20excellent%20benefit%20of%20multi,run%20your%20application%20in%20production.
+
 
 ## Implement a healthcheck in the V3 Docker compose file
 To implement a healthcheck we need to add some extra config in `docker-compose.yml`, in this case in frontend container, we add:
@@ -387,7 +392,6 @@ And now the container frontend appear unhealthy
 In this case, we can see the container is healthy in the console and with the command `docker ps -a`
 
 
-
 ## Research best practices of Dockerfiles and attempt to implement it in your Dockerfile
 I read this article:
 https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
@@ -414,6 +418,7 @@ And this is the result:
 ![Visual_Studio_Local](_docs/assets/week1/Visual_Studio_Local.png)
 
 ![CruddurLocal](_docs/assets/week1/CruddurLocal.png)
+
 
 ## Launch an EC2 instance that has docker installed, and pull a container to demonstrate you can run your own docker processes. 
 
