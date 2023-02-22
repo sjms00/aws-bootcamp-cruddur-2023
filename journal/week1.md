@@ -358,7 +358,7 @@ In dockerhub we see the image uploaded:
 
 ## Use multi-stage building for a Dockerfile build
 
-https://dev.to/pavanbelagatti/what-are-multi-stage-docker-builds-1mi9#:~:text=One%20excellent%20benefit%20of%20multi,run%20your%20application%20in%20production.
+I read this article [multi-stage](https://dev.to/pavanbelagatti/what-are-multi-stage-docker-builds-1mi9#:~:text=One%20excellent%20benefit%20of%20multi,run%20your%20application%20in%20production.)
 
 
 ## Implement a healthcheck in the V3 Docker compose file
