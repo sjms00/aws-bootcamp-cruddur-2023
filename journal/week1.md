@@ -412,7 +412,7 @@ With this info I installed docker:
 
 https://docs.docker.com/engine/install/ubuntu/
 
-Install git and clone my repositori:
+Install git and clone my repository:
 
 ```sh
 git clone https://github.com/sjms00/aws-bootcamp-cruddur-2023.git
