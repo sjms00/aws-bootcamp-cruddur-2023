@@ -332,6 +332,14 @@ Entire repo:
 
 # Homework Challenges    
 ## Run the dockerfile CMD as an external script
+I write this scrypt `Build_Run_Container.sh`to build and run our two containers for backend and frontend:
+
+```sh
+docker build -t  backend-flask ./backend-flask
+docker container run --rm -p 4567:4567 -e FRONTEND_URL='*' -e BACKEND_URL='*' -d backend-flask
+docker build -t  frontend-react-js ./frontend-react-js
+docker container run --rm -p 3000:3000 -d frontend-react-js
+```
 
 ## Push and tag a image to DockerHub (they have a free tier)
 
@@ -381,6 +389,9 @@ In this case, we can see the container is healthy in the console and with the co
 
 
 ## Research best practices of Dockerfiles and attempt to implement it in your Dockerfile
+I read this article:
+https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+
 
 ## Learn how to install Docker on your localmachine and get the same containers running outside of Gitpod / Codespaces
 
