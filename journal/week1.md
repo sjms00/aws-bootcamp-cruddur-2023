@@ -78,15 +78,16 @@ Return the container id into an Env Var
 CONTAINER_ID=$(docker run --rm -p 4567:4567 -d backend-flask)
 ```
 
-> docker container run is idiomatic, docker run is legacy syntax but is commonly used.
-
 ### Get Container Images or Running Container Ids
 
 ```
 docker ps
 docker images
 ```
-my docker started:
+my docker started with teh command:
+```sh
+docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
+```
 
 ![docker started](_docs/assets/week1/Docker_gippod_v2.png)
 
