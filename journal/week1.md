@@ -121,6 +121,7 @@ docker run --rm -it busybosy
 
 ### Gain Access to a Container
 
+> In my case I used:
 ```sh
 docker exec -it ce862da090a3 /bin/bash 
 ```
@@ -132,12 +133,8 @@ docker exec -it ce862da090a3 /bin/bash
 ### Delete an Image
 
 ```sh
-docker image rm backend-flask --force
+docker image rm curlimages/curl --force
 ```
-
-> docker rmi backend-flask is the legacy syntax, you might see this is old docker tutorials and articles.
-
-> There are some cases where you need to use the --force
 
 ### Overriding Ports
 
@@ -223,7 +220,7 @@ networks:
 
 I run 'docker compose up' and I'll test that the app is working:
 
-![docker compose](_docs/assets/week1/Docker-Compose.png)
+![docker compose](_docs/assets/week1/Docker-Compose2.png)
 
 ## Adding DynamoDB Local and Postgres
 
