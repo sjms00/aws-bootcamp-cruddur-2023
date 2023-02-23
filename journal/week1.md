@@ -84,7 +84,7 @@ CONTAINER_ID=$(docker run --rm -p 4567:4567 -d backend-flask)
 docker ps
 docker images
 ```
-my docker started with teh command:
+my docker started with the command:
 ```sh
 docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
 ```
@@ -96,21 +96,21 @@ docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-
 ```sh
 curl -X GET http://localhost:4567/api/activities/home -H "Accept: application/json" -H "Content-Type: application/json"
 ```
-That's work:
+That's work, I received a json file:
 ![json curl](_docs/assets/week1/json_curl.png)
 
 ### Check Container Logs
 
 ```sh
 docker logs $CONTAINER_ID -f
-docker logs backend-flask -f
-docker logs $CONTAINER_ID -f
 ```
 
 ###  Debugging  adjacent containers with other containers
 
+I tried with this command and I received a joson file:
+
 ```sh
-docker run --rm -it curlimages/curl "-X GET http://localhost:4567/api/activities/home -H \"Accept: application/json\" -H \"Content-Type: application/json\""
+docker run --rm -it curlimages/curl https://4567-sjms00-awsbootcampcrudd-r9au1p9nr4k.ws-eu87.gitpod.io/api/activities/home
 ```
 
 busybosy is often used for debugging since it install a bunch of thing
@@ -122,8 +122,10 @@ docker run --rm -it busybosy
 ### Gain Access to a Container
 
 ```sh
-docker exec $CONTAINER_ID -it /bin/bash
+docker exec -it ce862da090a3 /bin/bash 
 ```
+
+![Gain Access](_docs/assets/week1/Gain_Access.png)
 
 > You can just right click a container and see logs in VSCode with Docker extension
 
