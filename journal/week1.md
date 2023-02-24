@@ -396,7 +396,7 @@ In this case, we can see the container is healthy in the console and with the co
 ## Research best practices of Dockerfiles and attempt to implement it in your Dockerfile
 
 > I read this article, but for the moment I don't applied in my project:
-https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+> https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
 
 
 ## Learn how to install Docker on your localmachine and get the same containers running outside of Gitpod / Codespaces
