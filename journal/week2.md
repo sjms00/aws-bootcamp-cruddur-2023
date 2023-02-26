@@ -16,7 +16,7 @@ Add to the `requirements.txt`
 aws-xray-sdk
 ```
 
-Install pythonpendencies
+Install python dependencies
 
 ```sh
 pip install -r requirements.txt
@@ -173,6 +173,31 @@ export HONEYCOMB_SERVICE_NAME="bootcamp"
 gp env HONEYCOMB_API_KEY=""
 gp env HONEYCOMB_SERVICE_NAME="${HONEYCOMB_API_KEY}"
 ```
+
+I test the backend container and I have some data in HoneyComb
+---  ADD image HoneyComb_2.png
+
+
+
+Add opentelemetry in home_activities.py to Acquirinig Tracer
+Info in: https://docs.honeycomb.io/getting-data-in/opentelemetry/python/
+
+```py
+from opentelemetry import trace
+
+tracer = trace.get_tracer("home.activities")
+```
+
+Creating Spans
+Add also
+
+```py
+with tracer.start_as_current_span("home-activites-mock-data"):
+      span = trace.get_current_span()
+```
+
+I test the backend container and I have some data in HoneyComb with 2 spans
+---  ADD image HoneyComb_2.png
 
 ## CloudWatch Logs
 
