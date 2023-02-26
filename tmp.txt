@@ -1,0 +1,4 @@
+export HONEYCOMB_API_KEY="****"
+export HONEYCOMB_SERVICE_NAME="bootcamp"
+gp env HONEYCOMB_API_KEY="***"
+gp env HONEYCOMB_SERVICE_NAME="bootcamp"
