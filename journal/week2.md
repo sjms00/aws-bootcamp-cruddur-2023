@@ -74,6 +74,7 @@ aws xray create-group \
    --group-name "Cruddur" \
    --filter-expression "service(\"backend-flask\")"
 ```
+![Xray_create-group](_docs/assets/week2/Xray_create-group.png) 
 
 Create the samplig rule:
 
@@ -81,16 +82,12 @@ Create the samplig rule:
 aws xray create-sampling-rule --cli-input-json file://aws/json/xray.json
 ```
 
+![Xray_samplig_rule](_docs/assets/week2/Xray_samplig_rule.png) 
+
 Doc:
 [Install X-ray Daemon](https://docs.aws.amazon.com/xray/latest/devguide/xray-daemon.html)
 [Github aws-xray-daemon](https://github.com/aws/aws-xray-daemon)
 [X-Ray Docker Compose example](https://github.com/marjamis/xray/blob/master/docker-compose.yml)
-
-
-```sh
- wget https://s3.us-east-2.amazonaws.com/aws-xray-assets.us-east-2/xray-daemon/aws-xray-daemon-3.x.deb
- sudo dpkg -i **.deb
- ```
 
 ### Add Deamon Service to Docker Compose
 
