@@ -2,12 +2,17 @@
 
 ## X-Ray
 
+I'm used this doc:
+https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/xray.html
+https://github.com/aws/aws-xray-sdk-python
+
 ### Instrument AWS X-Ray for Flask
 
+We need to define this variables in the shell and gitpod config:
 
 ```sh
-export AWS_REGION="ca-central-1"
-gp env AWS_REGION="ca-central-1"
+export AWS_REGION="us-east-1"
+gp env AWS_REGION="us-east-1"
 ```
 
 Add to the `requirements.txt`
@@ -28,8 +33,15 @@ Add to `app.py`
 from aws_xray_sdk.core import xray_recorder
 from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
+......
+
 xray_url = os.getenv("AWS_XRAY_URL")
-xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
+xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+
+.....
+
+app = Flask(__name__)  # already exists
+# X-Ray ---------
 XRayMiddleware(app, xray_recorder)
 ```
 
@@ -39,43 +51,43 @@ Add `aws/json/xray.json`
 
 ```json
 {
-  "SamplingRule": {
-      "RuleName": "Cruddur",
-      "ResourceARN": "*",
-      "Priority": 9000,
-      "FixedRate": 0.1,
-      "ReservoirSize": 5,
-      "ServiceName": "Cruddur",
-      "ServiceType": "*",
-      "Host": "*",
-      "HTTPMethod": "*",
-      "URLPath": "*",
-      "Version": 1
-  }
+    "SamplingRule": {
+        "RuleName": "Cruddur",
+        "ResourceARN": "*",
+        "Priority": 9000,
+        "FixedRate": 0.1,
+        "ReservoirSize": 5,
+        "ServiceName": "backend-flask",
+        "ServiceType": "*",
+        "Host": "*",
+        "HTTPMethod": "*",
+        "URLPath": "*",
+        "Version": 1
+    }
 }
 ```
 
+Create the X-ray group in AWS
+
 ```sh
-FLASK_ADDRESS="https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
 aws xray create-group \
    --group-name "Cruddur" \
-   --filter-expression "service(\"$FLASK_ADDRESS\") {fault OR error}"
+   --filter-expression "service(\"backend-flask\")"
 ```
+![Xray_create-group](_docs/assets/week2/Xray_create-group.png) 
+
+Create the samplig rule:
 
 ```sh
 aws xray create-sampling-rule --cli-input-json file://aws/json/xray.json
 ```
 
- [Install X-ray Daemon](https://docs.aws.amazon.com/xray/latest/devguide/xray-daemon.html)
+![Xray_samplig_rule](_docs/assets/week2/Xray_samplig_rule.png) 
 
+Doc:
+[Install X-ray Daemon](https://docs.aws.amazon.com/xray/latest/devguide/xray-daemon.html)
 [Github aws-xray-daemon](https://github.com/aws/aws-xray-daemon)
 [X-Ray Docker Compose example](https://github.com/marjamis/xray/blob/master/docker-compose.yml)
-
-
-```sh
- wget https://s3.us-east-2.amazonaws.com/aws-xray-assets.us-east-2/xray-daemon/aws-xray-daemon-3.x.deb
- sudo dpkg -i **.deb
- ```
 
 ### Add Deamon Service to Docker Compose
 
