@@ -178,8 +178,7 @@ And I have a json file with the traces
 
 ## HoneyComb
 
-When creating a new dataset in Honeycomb it will provide all these installation insturctions
-
+I executed this instructions to have a dataset in Honeycomb
 
 
 We'll add the following files to our `requirements.txt`
@@ -216,13 +215,15 @@ processor = BatchSpanProcessor(OTLPSpanExporter())
 provider.add_span_processor(processor)
 
 # Show this in the logs within the backend-flask app (STDOUT)
+simple_processor = SimpleSpanProcessor(ConsoleSpanExporter())
+provider.add_span_processor(simple_processor)
 trace.set_tracer_provider(provider)
 tracer = trace.get_tracer(__name__)
 ```
 
 ```py
 # Initialize automatic instrumentation with Flask
-app = Flask(__name__)
+app = Flask(__name__)   ## Already exists
 FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
 ```
@@ -236,6 +237,7 @@ OTEL_EXPORTER_OTLP_HEADERS: "x-honeycomb-team=${HONEYCOMB_API_KEY}"
 ```
 
 You'll need to grab the API key from your honeycomb account:
+And add in the gitpod config to add this variables for the nexts workspaces
 
 ```sh
 export HONEYCOMB_API_KEY="${HONEYCOMB_API_KEY}"
@@ -244,10 +246,11 @@ gp env HONEYCOMB_API_KEY=""
 gp env HONEYCOMB_SERVICE_NAME="${HONEYCOMB_API_KEY}"
 ```
 
-I test the backend container and I have some data in HoneyComb
----  ADD image HoneyComb_2.png
+I test the backend container and I have some data in HoneyComb after request the home page
 
+![HoneyComb_1](_docs/assets/week2/HoneyComb_1.png) 
 
+![HoneyComb_2](_docs/assets/week2/HoneyComb_2.png) 
 
 Add opentelemetry in home_activities.py to Acquirinig Tracer
 Info in: https://docs.honeycomb.io/getting-data-in/opentelemetry/python/
@@ -267,7 +270,15 @@ with tracer.start_as_current_span("home-activites-mock-data"):
 ```
 
 I test the backend container and I have some data in HoneyComb with 2 spans
----  ADD image HoneyComb_2.png
+
+![HoneyComb_3](_docs/assets/week2/HoneyComb_3.png) 
+
+![HoneyComb_3b](_docs/assets/week2/HoneyComb_3b.png) 
+
+
+I run a query to visualize HEATMAP and P90
+
+![HoneyComb_query](_docs/assets/week2/HoneyComb_query.png) 
 
 ## CloudWatch Logs
 
@@ -293,13 +304,13 @@ from time import strftime
 
 ```py
 # Configuring Logger to Use CloudWatch
-LOGGER = logging.getLogger(__name__)
-LOGGER.setLevel(logging.DEBUG)
-console_handler = logging.StreamHandler()
-cw_handler = watchtower.CloudWatchLogHandler(log_group='cruddur')
-LOGGER.addHandler(console_handler)
-LOGGER.addHandler(cw_handler)
-LOGGER.info("some message")
+#LOGGER = logging.getLogger(__name__)
+#LOGGER.setLevel(logging.DEBUG)
+#console_handler = logging.StreamHandler()
+#cw_handler = watchtower.CloudWatchLogHandler(log_group='cruddur')
+#LOGGER.addHandler(console_handler)
+#LOGGER.addHandler(cw_handler)
+#LOGGER.info("Test Cloud Watch Logs")
 ```
 
 ```py
@@ -323,8 +334,11 @@ Set the env var in your backend-flask for `docker-compose.yml`
       AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
 ```
 
-> passing AWS_REGION doesn't seems to get picked up by boto3 so pass default region instead
+Afer request the home page I received some traces in AWS Cloudwatch console:
 
+![CloudWatch1](_docs/assets/week2/CloudWatch1.png) 
+
+![CloudWatch2](_docs/assets/week2/CloudWatch2.png) 
 
 ## Rollbar
 
