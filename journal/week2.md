@@ -111,12 +111,70 @@ We need to add these two env vars to our backend-flask in our `docker-compose.ym
       AWS_XRAY_DAEMON_ADDRESS: "xray-daemon:2000"
 ```
 
+I test the home and I have some traces:
+
+![Xray_traces](_docs/assets/week2/Xray_traces.png) 
+
+And a service map
+
+![Xray_service_map](_docs/assets/week2/Xray_service_map.png) 
+
+I modify user_activities.py with
+
+```sh
+from datetime import datetime, timedelta, timezone
+# xray ---
+from aws_xray_sdk.core import xray_recorder
+
+class UserActivities:
+  def run(user_handle):
+    # xray ---
+    segment = xray_recorder.begin_segment('user_activities')
+    model = {
+      'errors': None,
+      'data': None
+    }
+
+    now = datetime.now(timezone.utc).astimezone()
+
+    if user_handle == None or len(user_handle) < 1:
+      model['errors'] = ['blank_user_handle']
+    else:
+      now = datetime.now()
+      results = [{
+        'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
+        'handle':  'Andrew Brown',
+        'message': 'Cloud is fun!',
+        'created_at': (now - timedelta(days=1)).isoformat(),
+        'expires_at': (now + timedelta(days=31)).isoformat()
+      }]
+      model['data'] = results
+    
+    # xray ---
+    subsegment = xray_recorder.begin_subsegment('mock-data')
+    dict = {
+      "now": now.isoformat(),
+      "results-size": len(model['data'])
+    }
+    subsegment.put_metadata('key', dict, 'namespace')
+
+    return model
+```
+
+![Xray_subsegment](_docs/assets/week2/Xray_subsegment.png) 
+
 ### Check service data for last 10 minutes
+
+IN the terminal I execute this:
 
 ```sh
 EPOCH=$(date +%s)
 aws xray get-service-graph --start-time $(($EPOCH-600)) --end-time $EPOCH
 ```
+And I have a json file with the traces
+
+![Xray_query_command](_docs/assets/week2/Xray_query_command.png) 
+
 
 ## HoneyComb
 
