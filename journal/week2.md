@@ -410,5 +410,11 @@ def rollbar_test():
     return "Hello World!"
 ```
 
+And I get som items in rollbar web:
+
+![Rollbar_item](_docs/assets/week2/Rollbar_item.png)
+
+![Rollbar_item_UI](_docs/assets/week2/Rollbar_item_UI.png)
+
 
 [Rollbar Flask Example](https://github.com/rollbar/rollbar-flask-example/blob/master/hello.py)
