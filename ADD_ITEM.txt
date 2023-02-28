@@ -8,3 +8,7 @@ aws dynamodb put-item \
 
 
 aws dynamodb scan --table-name Music --endpoint-url http://localhost:8000
+
+
+export ROLLBAR_ACCESS_TOKEN="b8ae18a1de6d4191a1479de7b2d73799"
+gp env ROLLBAR_ACCESS_TOKEN="b8ae18a1de6d4191a1479de7b2d73799"
