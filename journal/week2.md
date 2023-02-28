@@ -373,9 +373,10 @@ Add to backend-flask for `docker-compose.yml`
 ROLLBAR_ACCESS_TOKEN: "${ROLLBAR_ACCESS_TOKEN}"
 ```
 
-Import for Rollbar
+Import for Rollbar in app.py
 
 ```py
+import os
 import rollbar
 import rollbar.contrib.flask
 from flask import got_request_exception
