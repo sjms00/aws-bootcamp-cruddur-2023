@@ -324,7 +324,9 @@ Add in load initialitation file index.js at the top:
 ```js
 // index.js
 import './tracing.js'
+......
 
+```
 
 
 ## CloudWatch Logs
