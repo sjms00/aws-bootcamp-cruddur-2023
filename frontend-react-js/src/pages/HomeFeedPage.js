@@ -7,8 +7,23 @@ import ActivityFeed from '../components/ActivityFeed';
 import ActivityForm from '../components/ActivityForm';
 import ReplyForm from '../components/ReplyForm';
 
+// Honeycomb frontend
+import { trace, context, } from '@opentelemetry/api';
+
 // [TODO] Authenication
 import Cookies from 'js-cookie'
+
+// Honeycomb frontend
+const tracer = trace.getTracer();
+const rootSpan = tracer.startActiveSpan('Home_Frontend_load', span => {
+  //start span when navigating to page
+  span.setAttribute('Home_pageUrlwindow', window.location.href);
+  window.onload = (event) => {
+    // ... do loading things
+    // ... attach timing information
+    span.end(); //once page is loaded, end the span
+  };
+}); 
 
 export default function HomeFeedPage() {
   const [activities, setActivities] = React.useState([]);
