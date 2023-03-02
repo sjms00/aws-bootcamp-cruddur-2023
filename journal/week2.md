@@ -176,7 +176,7 @@ And I have a json file with the traces
 ![Xray_query_command](_docs/assets/week2/Xray_query_command.png) 
 
 
-## HoneyComb
+## HoneyComb in backend
 
 I executed this instructions to have a dataset in Honeycomb
 
@@ -279,6 +279,51 @@ I test the backend container and I have some data in HoneyComb with 2 spans
 I run a query to visualize HEATMAP and P90
 
 ![HoneyComb_query](_docs/assets/week2/HoneyComb_query.png) 
+
+## HoneyComb in frontend
+
+Info:
+https://docs.honeycomb.io/getting-data-in/opentelemetry/browser-js/
+
+```sh
+npm install --save \
+    @opentelemetry/api \
+    @opentelemetry/sdk-trace-web \
+    @opentelemetry/exporter-trace-otlp-http \
+    @opentelemetry/context-zone
+```
+
+Add in pages tracing.js:
+
+```js
+// tracing.js
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
+import { WebTracerProvider, BatchSpanProcessor } from '@opentelemetry/sdk-trace-web';
+import { ZoneContextManager } from '@opentelemetry/context-zone';
+import { Resource }  from '@opentelemetry/resources';
+import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
+
+const exporter = new OTLPTraceExporter({
+  url: 'https://<your collector endpoint>:443/v1/traces'
+});
+const provider = new WebTracerProvider({
+  resource: new Resource({
+    [SemanticResourceAttributes.SERVICE_NAME]: 'browser',
+  }),
+});
+provider.addSpanProcessor(new BatchSpanProcessor(exporter));
+provider.register({
+  contextManager: new ZoneContextManager()
+});
+```
+
+Add in load initialitation file index.js at the top:
+
+```js
+// index.js
+import './tracing.js'
+
+
 
 ## CloudWatch Logs
 
