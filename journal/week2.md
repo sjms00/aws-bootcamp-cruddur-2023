@@ -304,11 +304,13 @@ import { Resource }  from '@opentelemetry/resources';
 import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
 
 const exporter = new OTLPTraceExporter({
-  url: 'https://<your collector endpoint>:443/v1/traces'
-});
+  url: "https://api.honeycomb.io/v1/traces",
+  headers: {
+    "x-honeycomb-team": "*************",
+  },
 const provider = new WebTracerProvider({
   resource: new Resource({
-    [SemanticResourceAttributes.SERVICE_NAME]: 'browser',
+    [SemanticResourceAttributes.SERVICE_NAME]: 'frontend',
   }),
 });
 provider.addSpanProcessor(new BatchSpanProcessor(exporter));
