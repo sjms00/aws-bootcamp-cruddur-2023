@@ -123,45 +123,46 @@ I modify user_activities.py with
 
 ```sh
 from datetime import datetime, timedelta, timezone
-# xray ---
 from aws_xray_sdk.core import xray_recorder
-
 class UserActivities:
   def run(user_handle):
-    # xray ---
-    segment = xray_recorder.begin_segment('user_activities')
-    model = {
-      'errors': None,
-      'data': None
-    }
+    try:
+      model = {
+        'errors': None,
+        'data': None
+      }
 
-    now = datetime.now(timezone.utc).astimezone()
+      now = datetime.now(timezone.utc).astimezone()
+      
+      if user_handle == None or len(user_handle) < 1:
+        model['errors'] = ['blank_user_handle']
+      else:
+        now = datetime.now()
+        results = [{
+          'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
+          'handle':  'Andrew Brown',
+          'message': 'Cloud is fun!',
+          'created_at': (now - timedelta(days=1)).isoformat(),
+          'expires_at': (now + timedelta(days=31)).isoformat()
+        }]
+        model['data'] = results
 
-    if user_handle == None or len(user_handle) < 1:
-      model['errors'] = ['blank_user_handle']
-    else:
-      now = datetime.now()
-      results = [{
-        'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
-        'handle':  'Andrew Brown',
-        'message': 'Cloud is fun!',
-        'created_at': (now - timedelta(days=1)).isoformat(),
-        'expires_at': (now + timedelta(days=31)).isoformat()
-      }]
-      model['data'] = results
-    
-    # xray ---
-    subsegment = xray_recorder.begin_subsegment('mock-data')
-    dict = {
-      "now": now.isoformat(),
-      "results-size": len(model['data'])
-    }
-    subsegment.put_metadata('key', dict, 'namespace')
-
+      subsegment = xray_recorder.begin_subsegment('mock-data')
+      # xray ---
+      dict = {
+        "now": now.isoformat(),
+        "results-size": len(model['data'])
+      }
+      subsegment.put_metadata('key', dict, 'namespace')
+      xray_recorder.end_subsegment()
+    finally:  
+    #  # Close the segment
+      xray_recorder.end_subsegment()
     return model
 ```
+I have a traces with subsegments:
 
-![Xray_subsegment](_docs/assets/week2/Xray_subsegment.png) 
+![Xray_subsegment](_docs/assets/week2/Xray_subsegment2.png) 
 
 ### Check service data for last 10 minutes
 
@@ -292,7 +293,20 @@ npm install --save \
     @opentelemetry/exporter-trace-otlp-http \
     @opentelemetry/context-zone
 ```
+And modify gitpod.yml like that:
 
+```sh
+ - name: react-js
+    command: |
+      cd frontend-react-js
+      npm i
+      npm install --save \
+      @opentelemetry/api \
+      @opentelemetry/sdk-trace-web \
+      @opentelemetry/exporter-trace-otlp-http \
+      @opentelemetry/context-zone
+```
+      
 Add in pages tracing.js:
 
 ```js
@@ -327,6 +341,10 @@ import './tracing.js'
 ......
 
 ```
+
+I test the frontend container and I have some data in HoneyComb
+
+![Honeycomb_frontend_2](_docs/assets/week2/Honeycomb_frontend_2.png) 
 
 
 ## CloudWatch Logs
