@@ -14,7 +14,7 @@ import { trace, context, } from '@opentelemetry/api';
 import Cookies from 'js-cookie'
 
 // Honeycomb frontend
-const tracer = trace.getTracer();
+const tracer = trace.getTracer('Load Home');
 const rootSpan = tracer.startActiveSpan('Home_Frontend_load', span => {
   //start span when navigating to page
   span.setAttribute('Home_pageUrlwindow', window.location.href);
@@ -58,7 +58,14 @@ export default function HomeFeedPage() {
         display_name: Cookies.get('user.name'),
         handle: Cookies.get('user.username')
       })
-    }
+      // Honeycomb frontend
+      tracer.startActiveSpan('User informed', usrSpan => {
+        // Add your attributes to describe the button clicked here
+        usrSpan.setAttribute('User: ', Cookies.get('user.name'));
+  
+        usrSpan.end();
+      });
+      }
   };
 
   React.useEffect(()=>{

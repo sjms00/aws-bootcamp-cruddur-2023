@@ -41,6 +41,9 @@ ports:
   - name: app
     port: 3000
     visibility: public
+  - name: dynamodb-local
+    port: 8000
+    visibility: public
 
 vscode:
   extensions:
