@@ -2,6 +2,9 @@
 
 ## Install AWS Amplify
 
+Info in: https://docs.amplify.aws/
+In frontend directory:
+
 ```sh
 npm i aws-amplify --save
 ```
@@ -32,6 +35,15 @@ Amplify.configure({
     userPoolWebClientId: process.env.REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID,   // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
   }
 });
+```
+
+Add this variables in docker-compose.yml (fronten section)
+
+```js
+ REACT_AWS_PROJECT_REGION: "${AWS_DEFAULT_REGION}"
+ REACT_APP_AWS_COGNITO_REGION: "${AWS_DEFAULT_REGION}"
+ REACT_APP_AWS_USER_POOLS_ID: "us-east-1_HPXmaEWDj"
+ REACT_APP_CLIENT_ID: "2es1tl395fituvl8rlho380479"
 ```
 
 ## Conditionally show components based on logged in or logged out
