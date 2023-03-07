@@ -382,6 +382,14 @@ const onsubmit_confirm_code = async (event) => {
   return false
 }
 
+I'll test the recover process password, ant it works find:
+
+![recover_pw1](_docs/assets/week3/recover_pw1.png)
+
+I received the code in my mail, and I change the pw:
+
+![recover_pw2](_docs/assets/week3/recover_pw2.png)
+
 ## Authenticating Server Side
 
 Add in the `HomeFeedPage.js` a header eto pass along the access token
