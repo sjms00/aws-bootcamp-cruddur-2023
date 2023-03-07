@@ -13,6 +13,8 @@ npm i aws-amplify --save
 
 Using the AWS Console we'll create a Cognito User Group
 
+![User_pool](_docs/assets/week3/User_pool.png) 
+
 ## Configure Amplify
 
 We need to hook up our cognito pool to our code in the `App.js`
@@ -250,6 +252,20 @@ if (cognitoErrors){
 {errors}
 ```
 
+I try to login and I have an normal error Incorrect username or password ...
+
+![Error_signin](_docs/assets/week3/Error_signin.png) 
+
+I force the password change with this command:
+
+```sh
+aws cognito-idp admin-set-user-password --user-pool-id us-east-1_8JhGCdj97 --username b214600e-63d6-48a8-b99a-4c3d07bff8b0 --password ******* --permanent 
+```
+
+And then the login is correct:
+
+![login_user](_docs/assets/week3/login_user2.png) 
+
 ## Signup Page
 
 ```js
@@ -325,6 +341,19 @@ const onsubmit = async (event) => {
   return false
 }
 ```
+
+I'll test the sigup proces, I deleted the user created manualy, 
+> the user created by the singup:
+
+![create_user_singup](_docs/assets/week3/create_user_singup.png)
+
+it send me a code by mail
+
+![Confirm_code](_docs/assets/week3/Confirm_code.png) 
+
+And I test the login with the neu user, it's OK
+
+![login_user3](_docs/assets/week3/login_user3.png)
 
 ## Recovery Page
 
