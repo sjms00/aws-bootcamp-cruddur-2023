@@ -598,11 +598,11 @@ modify HomeActivities.py
 ```py
 class HomeActivities:
   def run(cognito_user_id=None):
-'''
+```
 
 and add
 
-'''py
+```py
   if cognito_user_id != None:
         extra_crud = {
           'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
@@ -614,10 +614,14 @@ and add
           'replies': []
         }
         results.insert(0,extra_crud)
-'''
+```
  
 Then I can debug backend, to see the username
- 
+
+![Display_token](_docs/assets/week3/Display_token.png)
+
+and in the app, we see the extra_crud added "Lore"
+
 ![backend_token](_docs/assets/week3/backend_token.png)
  
 To delete localstorage (delete token) when signout, add en ProfileInfo.js (const signout)
