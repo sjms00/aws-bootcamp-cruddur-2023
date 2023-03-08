@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request
 from flask_cors import CORS, cross_origin
 import os
+import sys
 
 from services.home_activities import *
 from services.notifications_activities import *
@@ -13,6 +14,8 @@ from services.message_groups import *
 from services.messages import *
 from services.create_message import *
 from services.show_activity import *
+
+#from lib.cognito_jwt_token import CognitoJwtToken, extract_access_token, TokenVerifyError
 
 # X-Ray ---------
 from aws_xray_sdk.core import xray_recorder
@@ -33,6 +36,7 @@ import logging
 from time import strftime
 
 # Rollbar -----
+from time import strftime
 import os
 import rollbar
 import rollbar.contrib.flask
@@ -58,14 +62,22 @@ xray_url = os.getenv("AWS_XRAY_URL")
 xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 
 # Show this in the logs within the backend-flask app (STDOUT)
-simple_processor = SimpleSpanProcessor(ConsoleSpanExporter())
-provider.add_span_processor(simple_processor)
+#simple_processor = SimpleSpanProcessor(ConsoleSpanExporter())
+#provider.add_span_processor(simple_processor)
 
 trace.set_tracer_provider(provider)
 tracer = trace.get_tracer(__name__)
 
 
 app = Flask(__name__)
+
+#cognito_jwt_token = CognitoJwtToken(
+#  user_pool_id=os.getenv("AWS_COGNITO_USER_POOL_ID"), 
+#  user_pool_client_id=os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID"),
+#  region=os.getenv("AWS_DEFAULT_REGION")
+#)
+
+
 # X-Ray ---------
 XRayMiddleware(app, xray_recorder)
 
@@ -153,8 +165,19 @@ def data_create_message():
 
 @app.route("/api/activities/home", methods=['GET'])
 def data_home():
+  #access_token = extract_access_token(request.headers)
+  #claims = cognito_jwt_token.verify(access_token)
+    # authenicatied request
+  app.logger.debug("AUTH -----")
+  app.logger.debug(request.headers.get('Authorization'))
+  #app.logger.debug(claims)
+  #app.logger.debug(claims['username'])
   data = HomeActivities.run()
-  #data = HomeActivities.run(logger=LOGGER)
+  #except TokenVerifyError as e:
+    # unauthenicatied request
+  #  app.logger.debug(e)
+  # app.logger.debug("unauthenicated")
+  # data = HomeActivities.run()
   return data, 200
 
 @app.route("/api/activities/notifications", methods=['GET'])
