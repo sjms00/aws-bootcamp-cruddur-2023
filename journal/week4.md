@@ -1,11 +1,53 @@
 # Week 4 — Postgres and RDS
 
+I created an db instance and a database with aws cli
+Info in : https://docs.aws.amazon.com/cli/latest/reference/rds/create-db-instance.html
+I use this command:
 
+## Provision RDS Instance
+
+```sh
+aws rds create-db-instance \
+  --db-instance-identifier cruddur-db-instance \
+  --db-instance-class db.t3.micro \
+  --engine postgres \
+  --engine-version  14.6 \
+  --master-username crudurroot \
+  --master-user-password ******** \
+  --allocated-storage 20 \
+  --availability-zone us-east-1a \
+  --backup-retention-period 0 \
+  --port 5432 \
+  --no-multi-az \
+  --db-name cruddur \
+  --storage-type gp2 \
+  --publicly-accessible \
+  --storage-encrypted \
+  --enable-performance-insights \
+  --performance-insights-retention-period 7 \
+  --no-deletion-protection
+```
+
+
+![create_database](_docs/assets/week4/create_database.png) 
+
+I stopped temporaly the database created and I try to connect to the docker database postgres
 To connect to psql via the psql client cli tool remember to use the host flag to specific localhost.
 
 ```
 psql -Upostgres --host localhost
 ```
+And create a database named cruddr with:
+
+```sql
+CREATE database cruddur;
+```
+
+And list the databases:
+
+![connect_database_list](_docs/assets/week4/connect_database_list.png)
+
+
 
 Common PSQL commands:
 
@@ -53,15 +95,38 @@ We can create the database within the PSQL client
 CREATE database cruddur;
 ```
 
+
+We can use the next to login in database:
+
+```sh
+psql postgresql://postgres:password@localhost:5432/cruddur
+```
+
+or:
+
+```sh
+export CONNECTION_URL="postgresql://postgres:password@localhost:5432/cruddur"
+psql $CONNECTION_URL
+```
+
+![connect_database_env](_docs/assets/week4/connect_database_env.png)
+
+
+we create the connection URL's vars in local and prod database:
+
+```sh
+export CONNECTION_URL="postgresql://postgres:******@localhost:5432/cruddur"
+gp env CONNECTION_URL="postgresql://postgres:******@localhost:5432/cruddur"
+
+export PROD_CONNECTION_URL="postgresql://cruddurroot:******@cruddur-db-instance.czgmtaw1bmat.us-east-1.rds.amazonaws.com:5432/cruddur"
+gp env PROD_CONNECTION_URL="postgresql://cruddurroot:******@cruddur-db-instance.czgmtaw1bmat.us-east-1.rds.amazonaws.com:5432/cruddur"
+```
+
+
 ## Import Script
 
 We'll create a new SQL file called `schema.sql`
 and we'll place it in `backend-flask/db`
-
-The command to import:
-```
-psql cruddur < db/schema.sql -h localhost -U postgres
-```
 
 
 ## Add UUID Extension
@@ -70,7 +135,6 @@ We are going to have Postgres generate out UUIDs.
 We'll need to use an extension called:
 
 ```sql
-CREATE EXTENSION "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
 
@@ -78,12 +142,15 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 https://www.postgresql.org/docs/current/sql-createtable.html
 
+add the next sql statments:
+
 ```sql
 CREATE TABLE public.users (
   uuid UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-  display_name text,
-  handle text
-  cognito_user_id text,
+  display_name text NOT NULL,
+  handle text NOT NULL,
+  email text NOT NULL,
+  cognito_user_id text NOT NULL,
   created_at TIMESTAMP default current_timestamp NOT NULL
 );
 ```
@@ -91,6 +158,7 @@ CREATE TABLE public.users (
 ```sql
 CREATE TABLE public.activities (
   uuid UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  user_uuid UUID NOT NULL,
   message text NOT NULL,
   replies_count integer DEFAULT 0,
   reposts_count integer DEFAULT 0,
@@ -101,9 +169,17 @@ CREATE TABLE public.activities (
 );
 ```
 
+At the beginig we add the drop tables if existx:
+
 ```sql
 DROP TABLE IF EXISTS public.users;
 DROP TABLE IF EXISTS public.activities;
+```
+
+And in the backend-flask root directory we execute:
+
+```sh
+psql -Upostgres cruddur < db/schema.sql -h localhost
 ```
 
 # https://aviyadav231.medium.com/automatically-updating-a-timestamp-column-in-postgresql-using-triggers-98766e3b47a0
