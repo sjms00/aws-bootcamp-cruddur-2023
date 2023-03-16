@@ -144,6 +144,13 @@ https://www.postgresql.org/docs/current/sql-createtable.html
 
 add the next sql statments:
 
+At the beginig we add the drop tables if existx:
+
+```sql
+DROP TABLE IF EXISTS public.users;
+DROP TABLE IF EXISTS public.activities;
+```
+
 ```sql
 CREATE TABLE public.users (
   uuid UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
@@ -169,20 +176,15 @@ CREATE TABLE public.activities (
 );
 ```
 
-At the beginig we add the drop tables if existx:
-
-```sql
-DROP TABLE IF EXISTS public.users;
-DROP TABLE IF EXISTS public.activities;
-```
-
 And in the backend-flask root directory we execute:
 
 ```sh
 psql -Upostgres cruddur < db/schema.sql -h localhost
 ```
 
-# https://aviyadav231.medium.com/automatically-updating-a-timestamp-column-in-postgresql-using-triggers-98766e3b47a0
+# Automatically updating a timestamp column in PostgreSQL using Triggers
+
+https://aviyadav231.medium.com/automatically-updating-a-timestamp-column-in-postgresql-using-triggers-98766e3b47a0
 
 ```sql
 DROP FUNCTION IF EXISTS func_updated_at();
@@ -250,9 +252,15 @@ To execute the script:
 ```sh
 #! /usr/bin/bash
 
+CYAN='\033[1;36m'
+NO_COLOR='\033[0m'
+LABEL="db-drop"
+printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
+
 NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
-psql $NO_DB_CONNECTION_URL -c "DROP database cruddur;"
+psql $NO_DB_CONNECTION_URL -c "drop database cruddur;"
 ```
+![drop_create_db_script](_docs/assets/week4/drop_create_db_script.png) 
 
 https://askubuntu.com/questions/595269/use-sed-on-a-string-variable-rather-than-a-file
 
@@ -278,9 +286,16 @@ from pg_stat_activity;"
 ```sh
 #! /usr/bin/bash
 
+CYAN='\033[1;36m'
+NO_COLOR='\033[0m'
+LABEL="db-create"
+printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
+
 NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
-createdb cruddur $NO_DB_CONNECTION_URL
+psql $NO_DB_CONNECTION_URL -c "create database cruddur;"
 ```
+
+![drop_create_db_script](_docs/assets/week4/drop_create_db_script.png) 
 
 ## Shell script to load the schema
 
@@ -289,13 +304,26 @@ createdb cruddur $NO_DB_CONNECTION_URL
 ```sh
 #! /usr/bin/bash
 
-schema_path="$(realpath .)/db/schema.sql"
+CYAN='\033[1;36m'
+NO_COLOR='\033[0m'
+LABEL="db-schema-load"
+printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 
+schema_path="$(realpath .)/db/schema.sql"
 echo $schema_path
 
-NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
-psql $NO_DB_CONNECTION_URL cruddur < $schema_path
+if [ "$1" = "prod" ]; then
+  echo "Running in production mode"
+  URL=$PROD_CONNECTION_URL
+else
+  URL=$CONNECTION_URL
+fi
+
+psql $URL cruddur < $schema_path
 ```
+And executed in backend-flask directory:
+
+![drop_create_db_script](_docs/assets/week4/drop_create_db_script.png) 
 
 ## Shell script to load the seed data
 
