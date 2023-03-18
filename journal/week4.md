@@ -277,6 +277,7 @@ psql $NO_DB_CONNECTION_URL -c "select pid as process_id, \
 from pg_stat_activity;"
 ```
 
+
 > We could have idle connections left open by our Database Explorer extension, try disconnecting and checking again the sessions 
 
 ## Shell script to create the database
@@ -327,18 +328,49 @@ And executed in backend-flask directory:
 
 ## Shell script to load the seed data
 
+Create the script backend-flask/bin/db-seed
 ```
 #! /usr/bin/bash
 
-#echo "== db-schema-load"
+CYAN='\033[1;36m'
+NO_COLOR='\033[0m'
+LABEL="db-seed"
+printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 
+seed_path="$(realpath .)/db/seed.sql"
+echo $seed_path
 
-schema_path="$(realpath .)/db/schema.sql"
+if [ "$1" = "prod" ]; then
+  echo "Running in production mode"
+  URL=$PROD_CONNECTION_URL
+else
+  URL=$CONNECTION_URL
+fi
 
-echo $schema_path
-
-psql $CONNECTION_URL cruddur < $schema_path
+psql $URL cruddur < $seed_path
 ```
+
+Create the file for the seed in backend-flask/db/seed.sql
+
+```sql
+-- this file was manually created
+INSERT INTO public.users (display_name, handle, email, cognito_user_id)
+VALUES
+  ('Andrew Brown', 'andrewbrown' , 'jxxx@gmail.com', 'MOCK'),
+  ('Andrew Bayko', 'bayko' , 'qxxxx@gmail.com', 'MOCK');
+
+INSERT INTO public.activities (user_uuid, message, expires_at)
+VALUES
+  (
+    (SELECT uuid from public.users WHERE users.handle = 'andrewbrown' LIMIT 1),
+    'This was imported as seed data!',
+    current_timestamp + interval '10 day'
+  )
+```
+
+we try to execute backend-flask/bin/db-seed 
+
+![seed_script](_docs/assets/week4/seed_script.png)
 
 ## Easily setup (reset) everything for our database
 
