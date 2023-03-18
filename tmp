@@ -1,10 +1,14 @@
-#! /usr/bin/bash
 
-CYAN='\033[1;36m'
-NO_COLOR='\033[0m'
-LABEL="rds-update-sg-rule"
-printf "${CYAN}==== ${LABEL}${NO_COLOR}\n"
+sgr-067133a5a49d3ed1b
 
 aws ec2 modify-security-group-rules \
     --group-id $DB_SG_ID \
     --security-group-rules "SecurityGroupRuleId=$DB_SG_RULE_ID,SecurityGroupRule={Description=Gitpod,IpProtocol=tcp,FromPort=5432,ToPort=5432,CidrIpv4=$GITPOD_IP/32}"
+
+
+
+
+export DB_SG_ID="sg-8a2c86ba"
+gp env DB_SG_ID="sg-8a2c86ba"
+export DB_SG_RULE_ID="sgr-067133a5a49d3ed1b"
+gp env DB_SG_RULE_ID="sgr-067133a5a49d3ed1b"
