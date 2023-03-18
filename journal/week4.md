@@ -266,9 +266,25 @@ https://askubuntu.com/questions/595269/use-sed-on-a-string-variable-rather-than-
 
 ## See what connections we are using
 
+
+We'll create a new bash script `bin/db-sessions`
+
 ```sh
-NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
-psql $NO_DB_CONNECTION_URL -c "select pid as process_id, \
+#! /usr/bin/bash
+CYAN='\033[1;36m'
+NO_COLOR='\033[0m'
+LABEL="db-sessions"
+printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
+
+if [ "$1" = "prod" ]; then
+  echo "Running in production mode"
+  URL=$PROD_CONNECTION_URL
+else
+  URL=$CONNECTION_URL
+fi
+
+NO_DB_URL=$(sed 's/\/cruddur//g' <<<"$URL")
+psql $NO_DB_URL -c "select pid as process_id, \
        usename as user,  \
        datname as db, \
        client_addr, \
@@ -277,6 +293,9 @@ psql $NO_DB_CONNECTION_URL -c "select pid as process_id, \
 from pg_stat_activity;"
 ```
 
+We can see the sessions opened in the database:
+
+![sessions_script](_docs/assets/week4/sessions_script.png) 
 
 > We could have idle connections left open by our Database Explorer extension, try disconnecting and checking again the sessions 
 
@@ -374,12 +393,16 @@ we try to execute backend-flask/bin/db-seed
 
 ## Easily setup (reset) everything for our database
 
+to recreate,load the cruddur database will create the script backend-flask/bin/db-setup to do all this:
 
 ```sh
 #! /usr/bin/bash
 -e # stop if it fails at any point
 
-#echo "==== db-setup"
+CYAN='\033[1;36m'
+NO_COLOR='\033[0m'
+LABEL="db-setup"
+printf "${CYAN}==== ${LABEL}${NO_COLOR}\n"
 
 bin_path="$(realpath .)/bin"
 
@@ -388,6 +411,9 @@ source "$bin_path/db-create"
 source "$bin_path/db-schema-load"
 source "$bin_path/db-seed"
 ```
+
+![setup_script](_docs/assets/week4/setup_script.png)
+
 
 ## Make prints nicer
 
@@ -436,27 +462,29 @@ from psycopg_pool import ConnectionPool
 import os
 
 def query_wrap_object(template):
-  sql = '''
-  (SELECT COALESCE(row_to_json(object_row),'{}'::json) FROM (
+  sql = f"""
+  (SELECT COALESCE(row_to_json(object_row),'{{}}'::json) FROM (
   {template}
   ) object_row);
-  '''
+  """
+  return sql
 
 def query_wrap_array(template):
-  sql = '''
+  sql = f"""
   (SELECT COALESCE(array_to_json(array_agg(row_to_json(array_row))),'[]'::json) FROM (
   {template}
   ) array_row);
-  '''
+  """
+  return sql
 
 connection_url = os.getenv("CONNECTION_URL")
 pool = ConnectionPool(connection_url)
-```
+'''
 
 In our home activities we'll replace our mock endpoint with real api call:
 
 ```py
-from lib.db import pool, query_wrap_array
+from lib.db import pool, query_wrap_object, query_wrap_array
 
       sql = query_wrap_array("""
       SELECT
@@ -483,6 +511,10 @@ from lib.db import pool, query_wrap_array
           json = cur.fetchone()
       return json[0]
 ```
+
+And test the app
+
+![backend_db](_docs/assets/week4/backend_db.png)
 
 ## Provision RDS Instance
 
