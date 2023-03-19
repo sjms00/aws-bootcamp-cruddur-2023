@@ -557,41 +557,39 @@ We'll create an inbound rule for Postgres (5432) and provide the GITPOD ID.
 We'll get the security group rule id so we can easily modify it in the future from the terminal here in Gitpod.
 
 ```sh
-export DB_SG_ID="sg-0b725ebab7e25635e"
-gp env DB_SG_ID="sg-0b725ebab7e25635e"
-export DB_SG_RULE_ID="sgr-070061bba156cfa88"
-gp env DB_SG_RULE_ID="sgr-070061bba156cfa88"
+export DB_SG_ID="sg-8a2c86ba"
+gp env DB_SG_ID="sg-8a2c86ba"
+export DB_SG_RULE_ID="sgr-067133a5a49d3ed1b"
+gp env DB_SG_RULE_ID="sgr-067133a5a49d3ed1b"
 ```
 
 Whenever we need to update our security groups we can do this for access.
-```sh
+```sh    
 aws ec2 modify-security-group-rules \
     --group-id $DB_SG_ID \
-    --security-group-rules "SecurityGroupRuleId=$DB_SG_RULE_ID,SecurityGroupRule={IpProtocol=tcp,FromPort=5432,ToPort=5432,CidrIpv4=$GITPOD_IP/32}"
+    --security-group-rules "SecurityGroupRuleId=$DB_SG_RULE_ID,SecurityGroupRule={Description=Gitpod,IpProtocol=tcp,FromPort=5432,ToPort=5432,CidrIpv4=$GITPOD_IP/32}"
+
 ```
 
 https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-security-group-rules.html#examples
 
 ## Test remote access
 
-We'll create a connection url:
+We'll update your URL for production use case
 
-```
-postgresql://root:huEE33z2Qvl383@cruddur-db-instance.czz1cuvepklc.ca-central-1.rds.amazonaws.com:5433/cruddur
+```sh
+export PROD_CONNECTION_URL="postgresql://cruddurroot:******@cruddur-db-instance.czgmtaw1bmat.us-east-1.rds.amazonaws.com:5432/cruddur"
+gp env PROD_CONNECTION_URL="postgresql://cruddurroot:******@cruddur-db-instance.czgmtaw1bmat.us-east-1.rds.amazonaws.com:5432/cruddur"
 ```
 
 We'll test that it works in Gitpod:
 
-```sh
-psql postgresql://root:huEE33z2Qvl383@cruddur-db-instance.czz1cuvepklc.ca-central-1.rds.amazonaws.com:5432/cruddur
+``` sh
+psql $PROD_CONNECTION_URL
 ```
 
-We'll update your URL for production use case
+![prod_connection](_docs/assets/week4/prod_connection.png)
 
-```sh
-export PROD_CONNECTION_URL="postgresql://root:huEE33z2Qvl383@cruddur-db-instance.czz1cuvepklc.ca-central-1.rds.amazonaws.com:5432/cruddur"
-gp env PROD_CONNECTION_URL="postgresql://root:huEE33z2Qvl383@cruddur-db-instance.czz1cuvepklc.ca-central-1.rds.amazonaws.com:5432/cruddur"
-```
 
 ## Update Bash scripts for production
 
