@@ -742,6 +742,15 @@ And an user inserted in DB:
 ![singup_lambda_user_db](_docs/assets/week4/singup_lambda_user_db.png)
 
 
+### Create Activities
 
+I made the updates to create activities in:
 
+create_activities.py
+home_activities.py
+app.py  (hardcode user_handle)
+and new templates  **.sql
 
+It's works, but I hardcoded the user_handle with my user
+
+![create_activities](_docs/assets/week4/create_activities.png)
