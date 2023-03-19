@@ -607,14 +607,30 @@ We'll update:
 
 ## Update Gitpod IP on new env var
 
-We'll add a command step for postgres:
+We'll add a command step for postgres in gitpod.yml:
 
 ```sh
-    command: |
+   command: |
       export GITPOD_IP=$(curl ifconfig.me)
-      source "$THEIA_WORKSPACE_ROOT/backend-flask/db-update-sg-rule"
+      source "$THEIA_WORKSPACE_ROOT/backend-flask/bin/rds-update-sg-rule"
 ```
 
+And test the connection to aws postgres with the script in backend directory:
+
+``` sh
+./bin/db-connect prod
+```
+![prod_connection2](_docs/assets/week4/prod_connection2.png)
+
+## Load schema in prod
+
+In backend directory , we execute:
+
+``` sh
+./bin/db-schema-load prod
+```
+
+![prod_connection2](_docs/assets/week4/prod_connection2.png)
 
 ## Setup Cognito post confirmation lambda
 
@@ -625,40 +641,59 @@ We'll add a command step for postgres:
 
 ENV variables needed for the lambda environment.
 ```
+CONNECTION_URL=
 PG_HOSTNAME='cruddur-db-instance.czz1cuvepklc.ca-central-1.rds.amazonaws.com'
 PG_DATABASE='cruddur'
 PG_USERNAME='root'
 PG_PASSWORD='huEE33z2Qvl383'
 ```
 
-The function
+The function, add a copy in aws/lambdas/cruddur-post-confirrmation.py
 
 ```
 import json
 import psycopg2
+import os
 
 def lambda_handler(event, context):
     user = event['request']['userAttributes']
+    print('userAttributes')
+    print(user)
+
+    user_display_name  = user['name']
+    user_email         = user['email']
+    user_handle        = user['preferred_username']
+    user_cognito_id    = user['sub']
     try:
-        conn = psycopg2.connect(
-            host=(os.getenv('PG_HOSTNAME')),
-            database=(os.getenv('PG_DATABASE')),
-            user=(os.getenv('PG_USERNAME')),
-            password=(os.getenv('PG_SECRET'))
+      print('entered-try')
+      sql = f"""
+         INSERT INTO public.users (
+          display_name, 
+          email,
+          handle, 
+          cognito_user_id
+          ) 
+        VALUES(
+          '(user_display_name)',
+          '(user_email)',
+          '(user_hadle)',
+          '(user_cognito_id)'
         )
-        cur = conn.cursor()
-        cur.execute("INSERT INTO users (display_name, handle, cognito_user_id) VALUES(%s, %s, %s)", (user['name'], user['email'], user['sub']))
-        conn.commit() 
+      """
+      print('SQL Statement ----')
+      print(sql)
+      conn = psycopg2.connect(os.getenv('CONNECTION_URL'))
+      cur = conn.cursor()
+      cur.execute(sql)
+      conn.commit() 
 
     except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-        
+      print(error)
     finally:
-        if conn is not None:
-            cur.close()
-            conn.close()
-            print('Database connection closed.')
-
+      if conn is not None:
+          cur.close()
+          conn.close()
+          print('Database connection closed.')
     return event
 ```
 
@@ -675,9 +710,11 @@ Some precompiled versions of this layer are available publicly on AWS freely to 
 
 https://github.com/jetbridge/psycopg2-lambda-layer
 
-- Just go to Layers + in the function console and add a reference for your region
+- Just go to Layers + in the function console and add a reference for my region
 
-`arn:aws:lambda:ca-central-1:898466741470:layer:psycopg2-py38:1`
+`arn:aws:lambda:us-east-1:898466741470:layer:psycopg2-py38:2`
+
+![lambda_layer](_docs/assets/week4/lambda_layer.png)
 
 
 Alternatively you can create your own development layer by downloading the psycopg2-binary source files from https://pypi.org/project/psycopg2-binary/#files
@@ -694,3 +731,17 @@ Follow the instructions on https://github.com/AbhimanyuHK/aws-psycopg2 to compil
 ## Add the function to Cognito 
 
 Under the user pool properties add the function as a `Post Confirmation` lambda trigger.
+
+Test the singup:
+
+The logs Ok
+![singup_lambda](_docs/assets/week4/singup_lambda.png)
+
+And an user inserted in DB:
+
+![singup_lambda_user_db](_docs/assets/week4/singup_lambda_user_db.png)
+
+
+
+
+
