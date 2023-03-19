@@ -85,7 +85,6 @@ psql -U postgres -h localhost
 ```
 
 ```sql
-\l
 DROP database cruddur;
 ```
 
@@ -182,7 +181,7 @@ And in the backend-flask root directory we execute:
 psql -Upostgres cruddur < db/schema.sql -h localhost
 ```
 
-# Automatically updating a timestamp column in PostgreSQL using Triggers
+## Automatically updating a timestamp column in PostgreSQL using Triggers
 
 https://aviyadav231.medium.com/automatically-updating-a-timestamp-column-in-postgresql-using-triggers-98766e3b47a0
 
@@ -375,14 +374,14 @@ Create the file for the seed in backend-flask/db/seed.sql
 -- this file was manually created
 INSERT INTO public.users (display_name, handle, email, cognito_user_id)
 VALUES
-  ('Andrew Brown', 'andrewbrown' , 'jxxx@gmail.com', 'MOCK'),
-  ('Andrew Bayko', 'bayko' , 'qxxxx@gmail.com', 'MOCK');
+  ('Jordi Morreres', 'jordimorreres' , 'jxxx@gmail.com', 'MOCK'),
+  ('Andrew Bayko2', 'bayko2' , 'qxxxx@gmail.com', 'MOCK');
 
 INSERT INTO public.activities (user_uuid, message, expires_at)
 VALUES
   (
-    (SELECT uuid from public.users WHERE users.handle = 'andrewbrown' LIMIT 1),
-    'This was imported as seed data!',
+    (SELECT uuid from public.users WHERE users.handle = 'jordimorreres' LIMIT 1),
+    'This was imported as seed Jordi data!',
     current_timestamp + interval '10 day'
   )
 ```
@@ -516,34 +515,6 @@ And test the app
 
 ![backend_db](_docs/assets/week4/backend_db.png)
 
-## Provision RDS Instance
-
-```sh
-aws rds create-db-instance \
-  --db-instance-identifier cruddur-db-instance \
-  --db-instance-class db.t3.micro \
-  --engine postgres \
-  --engine-version  14.6 \
-  --master-username root \
-  --master-user-password huEE33z2Qvl383 \
-  --allocated-storage 20 \
-  --availability-zone ca-central-1a \
-  --backup-retention-period 0 \
-  --port 5432 \
-  --no-multi-az \
-  --db-name cruddur \
-  --storage-type gp2 \
-  --publicly-accessible \
-  --storage-encrypted \
-  --enable-performance-insights \
-  --performance-insights-retention-period 7 \
-  --no-deletion-protection
-```
-
-> This will take about 10-15 mins
-
-We can temporarily stop an RDS instance for 4 days when we aren't using it.
-
 ## Connect to RDS via Gitpod
 
 In order to connect to the RDS instance we need to provide our Gitpod IP and whitelist for inbound traffic on port 5432.
@@ -640,13 +611,14 @@ In backend directory , we execute:
 - Add a layer for psycopg2 with one of the below methods for development or production 
 
 ENV variables needed for the lambda environment.
+
+First add the variable CONNECTION_URL in docker_compose.yml
+
 ```
-CONNECTION_URL=
-PG_HOSTNAME='cruddur-db-instance.czz1cuvepklc.ca-central-1.rds.amazonaws.com'
-PG_DATABASE='cruddur'
-PG_USERNAME='root'
-PG_PASSWORD='huEE33z2Qvl383'
+environment:
+      CONNECTION_URL: "${PROD_CONNECTION_URL}"'
 ```
+and then add this var in ENV variables in lambda function
 
 The function, add a copy in aws/lambdas/cruddur-post-confirrmation.py
 
