@@ -26,6 +26,7 @@ export default function ActivityForm(props) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          user_handle: props.user_handle.handle, //XXX
           message: message,
           ttl: ttl
         }),

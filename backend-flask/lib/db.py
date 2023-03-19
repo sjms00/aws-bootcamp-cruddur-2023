@@ -49,6 +49,9 @@ class Db:
     try:
       with self.pool.connection() as conn:
         cur =  conn.cursor()
+        print("---------------")
+        self.print_sql('-----------commit with returning',sql)
+        print("---------------")
         cur.execute(sql,params)
         if is_returning_id:
           returning_id = cur.fetchone()[0]
