@@ -224,7 +224,7 @@ Person 2: Definitely. I think his character is a great example of the show's abi
 lines = conversation.lstrip('\n').rstrip('\n').split('\n')
 for i in range(len(lines)):
   if lines[i].startswith('Person 1: '):
-    key = 'my_user'
+    key = 'jmorreres'
     message = lines[i].replace('Person 1: ', '')
   elif lines[i].startswith('Person 2: '):
     key = 'other_user'
