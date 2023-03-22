@@ -224,7 +224,7 @@ Person 2: Definitely. I think his character is a great example of the show's abi
 lines = conversation.lstrip('\n').rstrip('\n').split('\n')
 for i in range(len(lines)):
   if lines[i].startswith('Person 1: '):
-    key = 'jmorreres'
+    key = 'my_user'
     message = lines[i].replace('Person 1: ', '')
   elif lines[i].startswith('Person 2: '):
     key = 'other_user'
@@ -236,7 +236,7 @@ for i in range(len(lines)):
   created_at = (now + timedelta(minutes=i)).isoformat()
   create_message(
     client=dynamodb,
-    message_group_uuid= message_group_uuid,
+    message_group_uuid=message_group_uuid,
     created_at=created_at,
     message=message,
     my_user_uuid=users[key]['uuid'],
