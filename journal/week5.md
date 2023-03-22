@@ -1,11 +1,51 @@
 # Week 5 — DynamoDB and Serverless Caching
 
+We need to install boto3 (AWS SDK pyton) in our backend, add in the requirements.txt
+
+```sh
+boto3
+```
+
+Nd install it
+
+```sh
+pip install -r requirements.txt 
+```
+
+Info in: https://boto3.amazonaws.com/v1/documentation/api/1.14.0/index.html
+
 
 ## DynamoDB Bash Scripts
 
+backend-flask/bin
+
 ```sh
-./bin/ddb/schem-load
+./bin/ddb/schema-load
 ```
+Create this bash scripts in ./bin/ddb:
+
+describe-table  
+drop  
+get-conversation  
+list-conversation  
+list-tables  
+scan  
+schema-load  
+seed  
+setup
+
+We create the table 'cruddur-messages' in local dynamodb with the script schema-load and thest the list-tables script
+
+![create_table_ddb](_docs/assets/week5/create_table_ddb.png) 
+
+And seed this table and verify with script scan
+
+![seed_local](_docs/assets/week5/seed_local.png)
+
+test get_conversation:
+
+![get_conversation_local](_docs/assets/week5/get_conversation_local.png)
+
 
 
 ## The Boundaries of DynamoDB
