@@ -44,8 +44,31 @@ And seed this table and verify with script scan
 
 test get_conversation:
 
+with the command:
+
+```sh
+./bin/ddb/patterns/get_conversation
+```
+
 ![get_conversation_local](_docs/assets/week5/get_conversation_local.png)
 
+test list_conversation:
+
+with the command:
+
+```sh
+./bin/ddb/patterns/list_conversation
+```
+
+![get_conversation_local](_docs/assets/week5/list_conversation_local.png)
+
+## Implement Update Cognito ID Script for Postgres Database
+
+we create the script ./bin/db/update_cognito_user_ids to update Cognito ID Script for Postgres Database
+
+![update_cognito_user_id](_docs/assets/week5/update_cognito_user_id.png)
+
+Modify diferents modules .js to eliminate the coockies and add the current user id
 
 
 ## The Boundaries of DynamoDB
