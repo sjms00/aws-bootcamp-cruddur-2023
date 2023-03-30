@@ -12,3 +12,7 @@ export DB_SG_ID="sg-8a2c86ba"
 gp env DB_SG_ID="sg-8a2c86ba"
 export DB_SG_RULE_ID="sgr-067133a5a49d3ed1b"
 gp env DB_SG_RULE_ID="sgr-067133a5a49d3ed1b"
+
+
+exoprt AWS_COGNITO_USER_POOL_ID="us-east-1_8JhGCdj97"
+gp env AWS_COGNITO_USER_POOL_ID="us-east-1_8JhGCdj97"
