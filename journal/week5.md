@@ -71,6 +71,15 @@ we create the script ./bin/db/update_cognito_user_ids to update Cognito ID Scrip
 Modify diferents modules .js to eliminate the coockies and add the current user id
 
 
+And test to see the messages of the conversation:
+
+![messages](_docs/assets/week5/messages.png)
+
+And add a new message in the conversation:
+
+![new_message](_docs/assets/week5/new_message.png)
+
+
 ## The Boundaries of DynamoDB
 
 - When you write a query you have provide a Primary Key (equality) eg. pk = 'andrew'
