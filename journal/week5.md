@@ -129,6 +129,9 @@ ORDER BY message_groups.last_message_at DESC
 ```
 
 > We need a Global Secondary Index (GSI)
+> And add a new message in the conversation:
+
+![messages](_docs/assets/week5/messages.png)
 
 ## Pattern C (create a message)
 
@@ -151,6 +154,10 @@ And add a new message in the conversation:
 
 ![new_message](_docs/assets/week5/new_message.png)
 
+Test a new conversation
+
+![new_conversation](_docs/assets/week5/new_conversation.png)
+
 ## Pattern D (update a message_group for the last message)
 
 When a user creates a message we need to update the conversation
@@ -168,11 +175,18 @@ WHERE
   message_groups.uuid = {{message_group_uuid}}
   AND message_groups.user_uuid = {{user_uuid}}
 ```
+
 Test a new conversation
 
 ![new_conversation](_docs/assets/week5/new_conversation.png)
 
 ## Serverless Caching
+
+
+Create and seed DynamoDB prod table
+
+![Create_DynamoDB_prod_table](_docs/assets/week5/Create_DynamoDB_prod_table.png)
+
 
 ### Install Momento CLI tool
 
@@ -232,6 +246,10 @@ momento cache create --name cruddur
 - grant the lambda IAM role permission to update table items
 
 
+Create a VPC Endpoint:
+
+![Create_VPC_endpoint](_docs/assets/week5/Create_VPC_endpoint.png)
+
 **The Function**
 
 ```.py
@@ -241,8 +259,8 @@ from boto3.dynamodb.conditions import Key, Attr
 
 dynamodb = boto3.resource(
  'dynamodb',
- region_name='ca-central-1',
- endpoint_url="http://dynamodb.ca-central-1.amazonaws.com"
+ region_name='us-east-1',
+ endpoint_url="http://dynamodb.us-east-1.amazonaws.com"
 )
 
 def lambda_handler(event, context):
@@ -280,3 +298,15 @@ def lambda_handler(event, context):
       )
       print("CREATE ===>",response)
 ```
+After create the VPC, DynamoDB table and lambda function in AWS, we test to create a new message:
+
+![New_msg_prod](_docs/assets/week5/New_msg_prod.png)
+
+Don't have any errors:
+
+![Cloudwatch_Lambda](_docs/assets/week5/Cloudwatch_Lambda.png)
+
+And we can see the recors in the prod table:
+
+![DynamoDB_record_prod](_docs/assets/week5/DynamoDB_record_prod.png)
+
