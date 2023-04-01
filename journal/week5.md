@@ -71,15 +71,6 @@ we create the script ./bin/db/update_cognito_user_ids to update Cognito ID Scrip
 Modify diferents modules .js to eliminate the coockies and add the current user id
 
 
-And test to see the messages of the conversation:
-
-![messages](_docs/assets/week5/messages.png)
-
-And add a new message in the conversation:
-
-![new_message](_docs/assets/week5/new_message.png)
-
-
 ## The Boundaries of DynamoDB
 
 - When you write a query you have provide a Primary Key (equality) eg. pk = 'andrew'
@@ -109,6 +100,10 @@ WHERE
   messages.message_group_uuid = {{message_group_uuid}} -- pk
 ORDER BY messages.created_at DESC
 ```
+
+And test to see the messages of the conversation:
+
+![messages](_docs/assets/week5/messages.png)
 
 > message_group_uuid comes from Pattern B
 
@@ -152,6 +147,10 @@ VALUES (
 );
 ```
 
+And add a new message in the conversation:
+
+![new_message](_docs/assets/week5/new_message.png)
+
 ## Pattern D (update a message_group for the last message)
 
 When a user creates a message we need to update the conversation
@@ -169,7 +168,9 @@ WHERE
   message_groups.uuid = {{message_group_uuid}}
   AND message_groups.user_uuid = {{user_uuid}}
 ```
+Test a new conversation
 
+![new_conversation](_docs/assets/week5/new_conversation.png)
 
 ## Serverless Caching
 
