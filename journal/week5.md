@@ -302,6 +302,10 @@ After create the VPC, DynamoDB table and lambda function in AWS, we test to crea
 
 ![New_msg_prod](_docs/assets/week5/New_msg_prod.png)
 
+Don't have any errors:
+
+![Cloudwatch_Lambda](_docs/assets/week5/Cloudwatch_Lambda.png)
+
 And we can see the recors in the prod table:
 
 ![DynamoDB_record_prod](_docs/assets/week5/DynamoDB_record_prod.png)
