@@ -16,3 +16,12 @@ gp env DB_SG_RULE_ID="sgr-067133a5a49d3ed1b"
 
 exoprt AWS_COGNITO_USER_POOL_ID="us-east-1_8JhGCdj97"
 gp env AWS_COGNITO_USER_POOL_ID="us-east-1_8JhGCdj97"
+
+
+export MOMENTO_AUTH_TOKEN=""
+export MOMENTO_TTL_SECONDS="600"
+export MOMENTO_CACHE_NAME="cruddur"
+gp env MOMENTO_AUTH_TOKEN=""
+gp env MOMENTO_TTL_SECONDS="600"
+gp env MOMENTO_CACHE_NAME="cruddur"
+
