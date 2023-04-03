@@ -44,7 +44,7 @@ finally:
 
 ## Task Flask Script
 
-We'll add the following endpoint for our flask app:
+We'll add the following endpoint for our flask app.py:
 
 ```py
 @app.route('/api/health-check')
@@ -59,18 +59,29 @@ We'll create a new bin script at `bin/flask/health-check`
 
 import urllib.request
 
-response = urllib.request.urlopen('http://localhost:4567/api/health-check')
-if response.getcode() == 200:
-  print("Flask server is running")
-else:
-  print("Flask server is not running")
+try:
+  response = urllib.request.urlopen('http://localhost:4567/api/health-check')
+  if response.getcode() == 200:
+    print("[OK] Flask server is running")
+    exit(0) # success
+  else:
+    print("[BAD] Flask server is not running")
+    exit(1) # false
+# This for some reason is not capturing the error....
+#except ConnectionRefusedError as e:
+# so we'll just catch on all even though this is a bad practice
+except Exception as e:
+  print(e)
+  exit(1) # false
 ```
+
+![test_flask_server](_docs/assets/week5/test_flask_server.png) 
 
 ## Create CloudWatch Log Group
 
 ```sh
-aws logs create-log-group --log-group-name cruddur
-aws logs put-retention-policy --log-group-name cruddur --retention-in-days 1
+aws logs create-log-group --log-group-name "/cruddur/fargate-cluster"
+aws logs put-retention-policy --log-group-name "/cruddur/fargate-cluster" --retention-in-days 1
 ```
 
 ## Create ECS Cluster
@@ -80,6 +91,8 @@ aws ecs create-cluster \
 --cluster-name cruddur \
 --service-connect-defaults namespace=cruddur
 ```
+
+![create_cluster](_docs/assets/week5/create_cluster.png) 
 
 ```sh
 export CRUD_CLUSTER_SG=$(aws ec2 create-security-group \
@@ -103,18 +116,19 @@ export CRUD_CLUSTER_SG=$(aws ec2 describe-security-groups \
 
 ## Create ECR repo and push image
 
-### Login to ECR
-
-```sh
-aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
-```
-
-### For Base-image python
+### Create repo for Base-image python
 
 ```sh
 aws ecr create-repository \
   --repository-name cruddur-python \
   --image-tag-mutability MUTABLE
+```
+
+### Login to ECR
+
+```sh
+aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
+
 ```
 
 #### Set URL
@@ -136,6 +150,15 @@ docker pull python:3.10-slim-buster
 docker tag python:3.10-slim-buster $ECR_PYTHON_URL:3.10-slim-buster
 ```
 
+to see the docker images we try with:
+
+```sh
+docker images
+```
+
+![docker_images_python](_docs/assets/week5/docker_images_python.png) 
+
+
 #### Push Image
 
 ```sh
@@ -148,6 +171,11 @@ In your flask dockerfile update the from to instead of using DockerHub's python 
 you use your own eg.
 
 > remember to put the :latest tag on the end
+
+```sh
+FROM 217248445007.dkr.ecr.us-east-1.amazonaws.com/cruddur-python:3.10-slim-buster
+....
+```
 
 #### Create Repo
 ```sh
@@ -164,6 +192,9 @@ echo $ECR_BACKEND_FLASK_URL
 ```
 
 #### Build Image
+
+In the backend-flas directory:
+
 ```sh
 docker build -t backend-flask .
 ```
@@ -179,6 +210,8 @@ docker tag backend-flask:latest $ECR_BACKEND_FLASK_URL:latest
 ```sh
 docker push $ECR_BACKEND_FLASK_URL:latest
 ```
+
+![ECR](_docs/assets/week5/ECR.png) 
 
 ### For Frontend React
 
