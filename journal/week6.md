@@ -92,6 +92,8 @@ aws ecs create-cluster \
 --service-connect-defaults namespace=cruddur
 ```
 
+![create_cluster](_docs/assets/week5/create_cluster.png) 
+
 ```sh
 export CRUD_CLUSTER_SG=$(aws ec2 create-security-group \
   --group-name cruddur-ecs-cluster-sg \
@@ -114,18 +116,19 @@ export CRUD_CLUSTER_SG=$(aws ec2 describe-security-groups \
 
 ## Create ECR repo and push image
 
-### Login to ECR
-
-```sh
-aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
-```
-
-### For Base-image python
+### Create repo for Base-image python
 
 ```sh
 aws ecr create-repository \
   --repository-name cruddur-python \
   --image-tag-mutability MUTABLE
+```
+
+### Login to ECR
+
+```sh
+aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
+
 ```
 
 #### Set URL
@@ -147,6 +150,15 @@ docker pull python:3.10-slim-buster
 docker tag python:3.10-slim-buster $ECR_PYTHON_URL:3.10-slim-buster
 ```
 
+to see the docker images we try with:
+
+```sh
+docker images
+```
+
+![docker_images_python](_docs/assets/week5/docker_images_python.png) 
+
+
 #### Push Image
 
 ```sh
@@ -159,6 +171,11 @@ In your flask dockerfile update the from to instead of using DockerHub's python 
 you use your own eg.
 
 > remember to put the :latest tag on the end
+
+```sh
+FROM 217248445007.dkr.ecr.us-east-1.amazonaws.com/cruddur-python:3.10-slim-buster
+....
+```
 
 #### Create Repo
 ```sh
@@ -175,6 +192,9 @@ echo $ECR_BACKEND_FLASK_URL
 ```
 
 #### Build Image
+
+In the backend-flas directory:
+
 ```sh
 docker build -t backend-flask .
 ```
@@ -190,6 +210,8 @@ docker tag backend-flask:latest $ECR_BACKEND_FLASK_URL:latest
 ```sh
 docker push $ECR_BACKEND_FLASK_URL:latest
 ```
+
+![ECR](_docs/assets/week5/ECR.png) 
 
 ### For Frontend React
 
