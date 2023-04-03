@@ -44,7 +44,7 @@ finally:
 
 ## Task Flask Script
 
-We'll add the following endpoint for our flask app:
+We'll add the following endpoint for our flask app.py:
 
 ```py
 @app.route('/api/health-check')
@@ -59,18 +59,29 @@ We'll create a new bin script at `bin/flask/health-check`
 
 import urllib.request
 
-response = urllib.request.urlopen('http://localhost:4567/api/health-check')
-if response.getcode() == 200:
-  print("Flask server is running")
-else:
-  print("Flask server is not running")
+try:
+  response = urllib.request.urlopen('http://localhost:4567/api/health-check')
+  if response.getcode() == 200:
+    print("[OK] Flask server is running")
+    exit(0) # success
+  else:
+    print("[BAD] Flask server is not running")
+    exit(1) # false
+# This for some reason is not capturing the error....
+#except ConnectionRefusedError as e:
+# so we'll just catch on all even though this is a bad practice
+except Exception as e:
+  print(e)
+  exit(1) # false
 ```
+
+![test_flask_server](_docs/assets/week5/test_flask_server.png) 
 
 ## Create CloudWatch Log Group
 
 ```sh
-aws logs create-log-group --log-group-name cruddur
-aws logs put-retention-policy --log-group-name cruddur --retention-in-days 1
+aws logs create-log-group --log-group-name "/cruddur/fargate-cluster"
+aws logs put-retention-policy --log-group-name "/cruddur/fargate-cluster" --retention-in-days 1
 ```
 
 ## Create ECS Cluster
