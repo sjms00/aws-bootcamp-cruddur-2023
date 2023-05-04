@@ -211,7 +211,7 @@ docker tag backend-flask:latest $ECR_BACKEND_FLASK_URL:latest
 docker push $ECR_BACKEND_FLASK_URL:latest
 ```
 
-![ECR](_docs/assets/week5/ECR.png) 
+![ECR](_docs/assets/week6/ECR.png) 
 
 ### For Frontend React
 
