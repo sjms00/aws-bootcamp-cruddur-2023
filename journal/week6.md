@@ -75,7 +75,7 @@ except Exception as e:
   exit(1) # false
 ```
 
-![test_flask_server](_docs/assets/week5/test_flask_server.png) 
+![test_flask_server](_docs/assets/week6/test_flask_server.png) 
 
 ## Create CloudWatch Log Group
 
@@ -92,7 +92,7 @@ aws ecs create-cluster \
 --service-connect-defaults namespace=cruddur
 ```
 
-![create_cluster](_docs/assets/week5/create_cluster.png) 
+![create_cluster](_docs/assets/week6/create_cluster.png) 
 
 ```sh
 export CRUD_CLUSTER_SG=$(aws ec2 create-security-group \
@@ -156,7 +156,7 @@ to see the docker images we try with:
 docker images
 ```
 
-![docker_images_python](_docs/assets/week5/docker_images_python.png) 
+![docker_images_python](_docs/assets/week6/docker_images_python.png) 
 
 
 #### Push Image
